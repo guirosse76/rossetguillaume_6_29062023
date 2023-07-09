@@ -10,23 +10,21 @@ fetch("http://localhost:5678/api/categories")
       // console.log(categorie2[0]), console.log(categorie2[1]);
     }
   });
-
+// gestion de l'affichage des images avec le titre
 fetch("http://localhost:5678/api/works")
   .then((data) => data.json())
   .then((works) => {
     console.log(works);
     const gallery = document.querySelector(".gallery");
-    // console.log(works.length);
-    // for (let a = 0; a < works.length; a++) {
-    //   console.log(a);
-    //   const img = document.createElement("img");
-    //   img.src = works[a].imageUrl;
-    //   gallery.appendChild(img);
-    // }
+
     for (const work of works) {
-      console.log(work);
+      const figure = document.createElement("figure");
       const img = document.createElement("img");
+      const figcaption = document.createElement("figcaption");
       img.src = work.imageUrl;
-      gallery.appendChild(img);
+      figcaption.textContent = work.title;
+      gallery.appendChild(figure);
+      figure.appendChild(img);
+      figure.appendChild(figcaption);
     }
   });
