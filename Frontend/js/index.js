@@ -3,18 +3,24 @@
 //   .then((works2) => console.table(works2));
 
 fetch("http://localhost:5678/api/categories")
-  .then((categorie) => categorie.json())
-  .then((categorie2) => {
-    for (let i = 0; i < categorie2.lenght; ++i) {
-      document.createElement("div");
-      // console.log(categorie2[0]), console.log(categorie2[1]);
+  .then((data) => data.json())
+  .then((cats) => {
+    const categorie = document.querySelector(".categorie");
+    let tous = document.createElement("spanTOUS");
+    tous.textContent = "Tous";
+    let parentDiv = tous.parentNode;
+    categorie.appendChild(tous);
+    for (const cat of cats) {
+      let span = document.createElement("span");
+      span.textContent = cat.name;
+      categorie.appendChild(span);
     }
   });
+
 // gestion de l'affichage des images avec le titre
 fetch("http://localhost:5678/api/works")
   .then((data) => data.json())
   .then((works) => {
-    console.log(works);
     const gallery = document.querySelector(".gallery");
 
     for (const work of works) {
