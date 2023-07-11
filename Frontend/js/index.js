@@ -1,12 +1,11 @@
-// fetch("http://localhost:5678/api/works")
-//   .then((works) => works.json())
-//   .then((works2) => console.table(works2));
+//gestion de l'affichage des catégories + la catégorie tous
 
 fetch("http://localhost:5678/api/categories")
   .then((data) => data.json())
   .then((cats) => {
     const categorie = document.querySelector(".categorie");
-    let tous = document.createElement("spanTOUS");
+    let tous = document.createElement("span");
+    tous.classList.add("spantous");
     tous.textContent = "Tous";
     let parentDiv = tous.parentNode;
     categorie.appendChild(tous);
