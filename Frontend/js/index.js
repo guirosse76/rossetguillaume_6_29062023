@@ -34,9 +34,8 @@ fetch("http://localhost:5678/api/works")
       var category = [works];
     }
     var tableau = new Array();
-    tableau = [category[1]];
     let objets = (category.name = "Objets");
-    console.log(tableau);
+    console.log(objets);
     let test = [works.length];
     console.log(test);
   });
