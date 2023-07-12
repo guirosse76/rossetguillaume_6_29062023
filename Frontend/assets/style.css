@@ -98,13 +98,29 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+a{
+	text-decoration: none;
+	color : black;
+}
+
+#login{
+	font-weight: bold;
+}
+
+a:active{
+	font-weight: bold;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
 }
+
 #introduction figure {
 	flex: 1
 }
+
 #introduction img {
 	display: block;
 	margin: auto;
@@ -134,20 +150,43 @@ li:hover {
 	
 }
 
+
+form .connexion{
+	display: flex;
+    flex-direction: column;
+	margin-left: 388px;
+}
+
+form h2 {
+	margin-bottom: 52px;
+	display: flex;
+	justify-content: center;
+}
+
+form p{
+	margin-bottom: 7px;
+}
+form input{
+	box-shadow: 0px 4px 14px 0px #00000017;
+	height: 51px;
+	width: 379px;
+	color: #FFFFFF;
+	border: solid 0px;
+	margin-bottom: 43px;
+}
 .categorie span{
 	border: 1px solid #1D6154;
 	border-radius: 60px;
-	height: 20px;
+	height: px;
 	padding: 9px;
 	color: #1D6154;
 }
 span:active{
 	background-color: #1D6154;
+	color: white;
 }
-/* 
-.categorie .spantous{
-	border: 2px solid #D9D9D9;
-	border-radius: 60px;
+/* .spantous:active{
+	color: white;
 } */
 
 .gallery {
