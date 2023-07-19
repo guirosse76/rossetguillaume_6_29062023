@@ -154,7 +154,7 @@ a:active{
 form .connexion{
 	display: flex;
     flex-direction: column;
-	margin-left: 388px;
+	margin-left: 370px;
 }
 
 form button{
@@ -186,7 +186,8 @@ form input{
 	box-shadow: 0px 4px 14px 0px #00000017;
 	height: 51px;
 	width: 379px;
-	color: #FFFFFF;
+	background-color: #FFFFFF;
+	color: black;
 	border: solid 0px;
 	margin-bottom: 43px;
 }
