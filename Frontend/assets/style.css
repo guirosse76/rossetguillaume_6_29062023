@@ -52,6 +52,12 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	
+}
+.barEdit{
+	background-color: black;
+	height: 40px;
+	margin: 0;	
 }
 header {
 	display: flex;

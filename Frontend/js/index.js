@@ -1,5 +1,3 @@
-//gestion de l'affichage des catégories + la catégorie tous
-
 // gestion de l'affichage des images avec le titre
 fetch("http://localhost:5678/api/works")
   .then((data) => data.json())
@@ -14,13 +12,14 @@ fetch("http://localhost:5678/api/works")
         cats.unshift(allCat);
         // création des catégorie et des projets
         createCategories(cats, works);
-
-        // console.log(works, cats);
-        // console.log(works[2].category.name);
+        // vérification si la personne est connecté
+        checkConnexion();
+        //Création des elements du mode édition
+        gestionModeEdition();
       });
   });
 
-function createWorks(works, newWorks) {
+function createWorks(works, newworks) {
   const gallery = document.querySelector(".gallery");
   gallery.innerHTML = "";
 
@@ -33,6 +32,20 @@ function createWorks(works, newWorks) {
     gallery.appendChild(figure);
     figure.appendChild(img);
     figure.appendChild(figcaption);
+  }
+
+  for (const newworks of works) {
+    if (newworks.category.id === "1") {
+      const figure = document.createElement("figure");
+      const img = document.createElement("img");
+      const figcaption = document.createElement("figcaption");
+      // img.src = newworks.imageUrl;
+      // figcaption.textContent = newworks.title;
+      work.category.id = 1;
+      gallery.appendChild(figure);
+      figure.appendChild(img);
+      figure.appendChild(figcaption);
+    }
   }
 }
 
@@ -47,17 +60,45 @@ function createCategories(cats, works) {
     span.addEventListener("click", (e) => {
       let filtres = e.target.textContent;
       console.log(filtres);
-      // let newWorks = work.category.filtres;
-      // console.log(work.category);
-      // // let newWorks = filtres.category.name;
-      // createWorks(newWorks);
-      // if (newWorks != work.category.name) {
-      //   figure.style.display = "none";
-      // }
-      // newWorks = work.category.name;
-      // console.log(newWorks);
+      if (filtres === "Tous") {
+        createWorks(works);
+      } else if (filtres === "Objets") {
+        newworks = "Objets";
+
+        createWorks(works, newworks);
+        test = "Objets";
+      } else {
+        test = "fuck";
+      }
     });
   }
 }
 
-function createNewCategories(cats, works) {}
+function checkConnexion() {
+  token = localStorage.getItem("tokenUSER");
+  const login = document.getElementById("login");
+  if ((token = !undefined)) {
+    login.innerHTML = "logout";
+    login.addEventListener("click", (e) => {
+      localStorage.removeItem("tokenUSER");
+    });
+  }
+}
+
+function gestionModeEdition() {
+  const bar = document.querySelector(".barEdit");
+  const iconeImage = document.createElement("i");
+  const p = document.createElement("p");
+  const bouton = document.createElement("span");
+  bar.appendChild(iconeImage);
+  bar.appendChild(p);
+  bar.appendChild(bouton);
+
+  const modifImage = document.getElementById(introduction);
+  introduction.appendChild(iconeImage);
+  introduction.appendChild(p);
+
+  const modifProjet = document.getElementById(titre);
+  const iconeProjet = document.createElement("i");
+  titre.appendChild(iconeProjet);
+}
