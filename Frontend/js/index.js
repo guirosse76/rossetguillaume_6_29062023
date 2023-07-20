@@ -14,12 +14,10 @@ fetch("http://localhost:5678/api/works")
         createCategories(cats, works);
         // vérification si la personne est connecté
         checkConnexion();
-        //Création des elements du mode édition
-        gestionModeEdition();
       });
   });
 
-function createWorks(works, newworks) {
+function createWorks(works) {
   const gallery = document.querySelector(".gallery");
   gallery.innerHTML = "";
 
@@ -32,20 +30,6 @@ function createWorks(works, newworks) {
     gallery.appendChild(figure);
     figure.appendChild(img);
     figure.appendChild(figcaption);
-  }
-
-  for (const newworks of works) {
-    if (newworks.category.id === "1") {
-      const figure = document.createElement("figure");
-      const img = document.createElement("img");
-      const figcaption = document.createElement("figcaption");
-      // img.src = newworks.imageUrl;
-      // figcaption.textContent = newworks.title;
-      work.category.id = 1;
-      gallery.appendChild(figure);
-      figure.appendChild(img);
-      figure.appendChild(figcaption);
-    }
   }
 }
 
@@ -62,13 +46,17 @@ function createCategories(cats, works) {
       console.log(filtres);
       if (filtres === "Tous") {
         createWorks(works);
-      } else if (filtres === "Objets") {
-        newworks = "Objets";
-
-        createWorks(works, newworks);
-        test = "Objets";
       } else {
-        test = "fuck";
+        //Flitrer les works
+        console.log(works);
+        const newWorks = works.filter((work) => filtres === work.category.name);
+        // works.filter((work) => {
+        //   if (filtres === work.catergory.name) {
+        //     return work;
+        //   }
+        // });
+        // newWorks = [works[0], works[5]];
+        createWorks(newWorks);
       }
     });
   }
@@ -77,28 +65,46 @@ function createCategories(cats, works) {
 function checkConnexion() {
   token = localStorage.getItem("tokenUSER");
   const login = document.getElementById("login");
-  if ((token = !undefined)) {
+  if (token) {
     login.innerHTML = "logout";
     login.addEventListener("click", (e) => {
       localStorage.removeItem("tokenUSER");
     });
+    //Création des elements du mode édition
+    gestionModeEdition();
   }
 }
 
 function gestionModeEdition() {
-  const bar = document.querySelector(".barEdit");
-  const iconeImage = document.createElement("i");
-  const p = document.createElement("p");
+  const bar = document.createElement("div");
+  bar.className = "barEdit";
+
+  const headerElement = document.querySelector("header");
+  const bodyElement = document.querySelector("body");
+  bodyElement.insertBefore(bar, headerElement);
+
+  // div.parentNode.bar;
+  const iconeBar = document.createElement("i");
+  iconeBar.className = "fa-regular fa-pen-to-square";
+
+  const pBar = document.createElement("p");
+  pBar.innerHTML = "Modifier";
   const bouton = document.createElement("span");
-  bar.appendChild(iconeImage);
-  bar.appendChild(p);
+
+  const iconeImage = document.createElement("i");
+  iconeImage.className = "fa-regular fa-pen-to-square";
+  bar.appendChild(iconeBar);
+  bar.appendChild(pBar);
   bar.appendChild(bouton);
 
   const modifImage = document.getElementById(introduction);
+  const pImage = document.createElement("p");
+
   introduction.appendChild(iconeImage);
-  introduction.appendChild(p);
+  introduction.appendChild(pImage);
 
   const modifProjet = document.getElementById(titre);
   const iconeProjet = document.createElement("i");
+  iconeProjet.className = "fa-light fa-pen-to-square";
   titre.appendChild(iconeProjet);
 }

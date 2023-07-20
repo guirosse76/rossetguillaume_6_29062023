@@ -40,7 +40,7 @@ function verificationToken(response) {
   // si mes deux variables sont différentes 'undefined' c'est que le serveur a envoyé le token
   if (userId && token != undefined) {
     //stockage du token dans le localStorage
-    tokenJSON = localStorage.setItem("tokenUSER", JSON.stringify(response));
+    tokenJSON = localStorage.setItem("tokenUSER", JSON.stringify(token));
     // redirection vers la page principale
     document.location.href = "./index.html";
   } else {
