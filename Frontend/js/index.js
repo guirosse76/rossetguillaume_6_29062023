@@ -48,14 +48,7 @@ function createCategories(cats, works) {
         createWorks(works);
       } else {
         //Flitrer les works
-        console.log(works);
         const newWorks = works.filter((work) => filtres === work.category.name);
-        // works.filter((work) => {
-        //   if (filtres === work.catergory.name) {
-        //     return work;
-        //   }
-        // });
-        // newWorks = [works[0], works[5]];
         createWorks(newWorks);
       }
     });
@@ -83,9 +76,8 @@ function gestionModeEdition() {
   const bodyElement = document.querySelector("body");
   bodyElement.insertBefore(bar, headerElement);
 
-  // div.parentNode.bar;
   const iconeBar = document.createElement("i");
-  iconeBar.className = "fa-regular fa-pen-to-square";
+  iconeBar.className = "fa-regular fa-pen-to-square iconebar";
 
   const pBar = document.createElement("p");
   pBar.innerHTML = "Modifier";
@@ -105,6 +97,6 @@ function gestionModeEdition() {
 
   const modifProjet = document.getElementById(titre);
   const iconeProjet = document.createElement("i");
-  iconeProjet.className = "fa-light fa-pen-to-square";
+  iconeProjet.className = "fa-regular fa-pen-to-square";
   titre.appendChild(iconeProjet);
 }

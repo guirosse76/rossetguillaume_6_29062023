@@ -59,7 +59,11 @@ body {
 	height: 40px;
 	margin: 0;	
 }
-.fa-light .fa-pen-to-square{
+i .fa-regular .fa-pen-to-square {
+	color: black;
+}
+
+.iconebar{
 	color: white;
 }
 
