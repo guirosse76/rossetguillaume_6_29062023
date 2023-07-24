@@ -80,23 +80,30 @@ function gestionModeEdition() {
   iconeBar.className = "fa-regular fa-pen-to-square iconebar";
 
   const pBar = document.createElement("p");
-  pBar.innerHTML = "Modifier";
+  pBar.innerHTML = "Mode Edition";
   const bouton = document.createElement("span");
-
-  const iconeImage = document.createElement("i");
-  iconeImage.className = "fa-regular fa-pen-to-square";
+  bouton.innerHTML = "publier les changements";
+  bouton.className = "boutonPublication";
   bar.appendChild(iconeBar);
   bar.appendChild(pBar);
   bar.appendChild(bouton);
 
+  const divImage = document.createElement("div");
+  divImage.className = "divImage";
+  const iconeImage = document.createElement("i");
+  iconeImage.className = "fa-regular fa-pen-to-square";
   const modifImage = document.getElementById(introduction);
   const pImage = document.createElement("p");
-
-  introduction.appendChild(iconeImage);
-  introduction.appendChild(pImage);
+  pImage.innerHTML = "modifier";
+  introduction.appendChild(divImage);
+  divImage.appendChild(iconeImage);
+  divImage.appendChild(pImage);
 
   const modifProjet = document.getElementById(titre);
   const iconeProjet = document.createElement("i");
   iconeProjet.className = "fa-regular fa-pen-to-square";
+  const pProjet = document.createElement("p");
+  pProjet.innerHTML = "modifier";
   titre.appendChild(iconeProjet);
+  titre.appendChild(pProjet);
 }

@@ -58,9 +58,30 @@ body {
 	background-color: black;
 	height: 40px;
 	margin: 0;	
+	position: absolute;
+top: 0; left: 0;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
 }
 i .fa-regular .fa-pen-to-square {
 	color: black;
+}
+
+.barEdit p {
+	color: white;
+}
+
+.barEdit .boutonPublication{
+	padding: 0 15px;
+    background-color: white;
+    border-radius: 25px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+	font-size: 12px;
 }
 
 .iconebar{
@@ -70,7 +91,7 @@ i .fa-regular .fa-pen-to-square {
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin-top: 86px;
 }
 section {
 	margin: 50px 0
@@ -126,11 +147,16 @@ a:active{
 	font-weight: bold;
 }
 
-#introduction {
+#introduction .divImage{
 	display: flex;
-	align-items: center;
+	gap: 9px;
+	margin-left: 56px;
+	margin-top: 15px;
 }
 
+#introduction .intro{
+	display: flex;
+}
 #introduction figure {
 	flex: 1
 }
@@ -152,10 +178,20 @@ a:active{
 	margin-bottom: 0.5em;
 }
 #portfolio h2 {
-	text-align: center;
-	margin-bottom: 1em;
+	margin-right: 40px;
 }
 
+#portfolio #titre{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+
+}
+
+#titre p {
+	margin-left: 10px;
+}
 #portfolio .categorie{
 	margin-bottom: 50px;
 	display: flex;
