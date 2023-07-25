@@ -93,7 +93,9 @@ function gestionModeEdition() {
   const iconeImage = document.createElement("i");
   iconeImage.className = "fa-regular fa-pen-to-square";
   const modifImage = document.getElementById(introduction);
-  const pImage = document.createElement("p");
+  const pImage = document.createElement("a");
+  pImage.setAttribute("href", "#modal1");
+  pImage.className = "js-modal";
   pImage.innerHTML = "modifier";
   introduction.appendChild(divImage);
   divImage.appendChild(iconeImage);
@@ -102,8 +104,10 @@ function gestionModeEdition() {
   const modifProjet = document.getElementById(titre);
   const iconeProjet = document.createElement("i");
   iconeProjet.className = "fa-regular fa-pen-to-square";
-  const pProjet = document.createElement("p");
-  pProjet.innerHTML = "modifier";
+  const aProjet = document.createElement("a");
+  aProjet.setAttribute("href", "#modal1");
+  aProjet.className = "js-modal";
+  aProjet.innerHTML = "modifier";
   titre.appendChild(iconeProjet);
-  titre.appendChild(pProjet);
+  titre.appendChild(aProjet);
 }
