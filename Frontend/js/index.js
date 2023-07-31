@@ -10,6 +10,7 @@ fetch("http://localhost:5678/api/works")
         //Ajout du bouton Tous en premier
         const allCat = { id: 0, name: "Tous" };
         cats.unshift(allCat);
+
         // création des catégorie et des projets
         createCategories(cats, works);
         // vérification si la personne est connecté
@@ -39,20 +40,43 @@ function createCategories(cats, works) {
   for (const cat of cats) {
     let span = document.createElement("span");
     span.textContent = cat.name;
+    span.className = "span";
     categorie.appendChild(span);
 
-    span.addEventListener("click", (e) => {
-      let filtres = e.target.textContent;
-      console.log(filtres);
-      if (filtres === "Tous") {
-        createWorks(works);
-      } else {
-        //Flitrer les works
-        const newWorks = works.filter((work) => filtres === work.category.name);
-        createWorks(newWorks);
-      }
-    });
+    function changeBackground(index) {
+      const target = document.querySelectorAll(".span");
+      const spanSelected = document.querySelectorAll(".span_selected");
+      span.classList.add("span");
+      target[0].classList.add("span_selected");
+
+      span.addEventListener("click", (e) => {
+        let filtres = e.target.textContent;
+        nombre = target.length;
+        span.classList.remove("span_selected");
+
+        if (filtres === "Tous") {
+          createWorks(works);
+          span.classList.add("span_selected");
+        } else {
+          target[0].classList.remove("span_selected");
+
+          for (const span of target) {
+            span.classList.remove("span_selected");
+          }
+
+          //Flitrer les works
+          const newWorks = works.filter(
+            (work) => filtres === work.category.name
+          );
+          createWorks(newWorks);
+        }
+      });
+    }
   }
+}
+
+function changeBackgroundCat() {
+  console.log(filtres);
 }
 
 function checkConnexion() {
@@ -110,4 +134,5 @@ function gestionModeEdition() {
   aProjet.innerHTML = "modifier";
   titre.appendChild(iconeProjet);
   titre.appendChild(aProjet);
+  eventModal();
 }

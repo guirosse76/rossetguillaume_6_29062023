@@ -246,15 +246,13 @@ form input{
 	border-radius: 60px;
 	height: px;
 	padding: 9px;
-	color: #1D6154;
 }
-span:active{
+
+
+.span_selected{
 	background-color: #1D6154;
 	color: white;
 }
-/* .spantous:active{
-	color: white;
-} */
 
 .gallery {
 	width: 100%;
@@ -345,7 +343,17 @@ footer nav ul {
 
 .modal-wrapper i{
 	font-size: 20px;
+	font-weight: 15px;
 	display: flex;
 	justify-content: flex-end;
 	padding: 17px 30px;
+}
+
+.modal-wrapper h1{
+	text-align: center;
+	font-size: 26px;
+	font-weight: 400;
+	color: black;
+	font-family: work sans-serif;
+	margin-bottom: 38px;
 }
