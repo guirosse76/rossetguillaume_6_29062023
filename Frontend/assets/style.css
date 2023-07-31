@@ -254,6 +254,8 @@ form input{
 	color: white;
 }
 
+
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -332,21 +334,32 @@ footer nav ul {
 	height: 100%;
 }
 
+.modal-wrapper .header-modal {
+	position: relative;
+
+
+margin-bottom: 30px;
+}
+
 .modal-wrapper{
-	height: 731px;
-	width: 630px;
+	height:70%;
+	width: 500px;
 	background-color: white;
 	max-width: calc(100vw - 20px);
 	max-height: calc(100vh - 20px);
  	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	border-radius: 10px;
+
 }
 
 .modal-wrapper i{
 	font-size: 20px;
 	font-weight: 15px;
-	display: flex;
-	justify-content: flex-end;
-	padding: 17px 30px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
 }
 
 .modal-wrapper h1{
@@ -355,5 +368,21 @@ footer nav ul {
 	font-weight: 400;
 	color: black;
 	font-family: work sans-serif;
-	margin-bottom: 38px;
+	margin-top: 60px;
+}
+
+.modal-wrapper img{
+	width: 76px;
+	height: 102px;
+}
+
+.modal-wrapper figure{
+	margin-top: 20px;
+}
+
+.modal-wrapper .worksModal{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-left: 38px;
 }

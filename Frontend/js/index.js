@@ -15,6 +15,8 @@ fetch("http://localhost:5678/api/works")
         createCategories(cats, works);
         // vérification si la personne est connecté
         checkConnexion();
+        // ajout des works dans la modal
+        createWorksModal(works);
       });
   });
 
@@ -34,6 +36,25 @@ function createWorks(works) {
   }
 }
 
+function createWorksModal(works) {
+  const worksModal = document.querySelector(".modal-wrapper");
+  const div = document.createElement("div");
+  div.className = "worksModal";
+  for (const work of works) {
+    const figure = document.createElement("figure");
+    const img = document.createElement("img");
+    const figcaption = document.createElement("figcaption");
+
+    img.src = work.imageUrl;
+    figcaption.textContent = "éditer";
+
+    worksModal.appendChild(div);
+    div.appendChild(figure);
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+  }
+}
+
 function createCategories(cats, works) {
   const categorie = document.querySelector(".categorie");
 
@@ -43,41 +64,36 @@ function createCategories(cats, works) {
     span.className = "span";
     categorie.appendChild(span);
 
-    function changeBackground(index) {
-      const target = document.querySelectorAll(".span");
-      const spanSelected = document.querySelectorAll(".span_selected");
-      span.classList.add("span");
-      target[0].classList.add("span_selected");
+    const target = document.querySelectorAll(".span");
+    const spanSelected = document.querySelectorAll(".span_selected");
+    span.classList.add("span");
+    target[0].classList.add("span_selected");
 
-      span.addEventListener("click", (e) => {
-        let filtres = e.target.textContent;
-        nombre = target.length;
-        span.classList.remove("span_selected");
+    span.addEventListener("click", (e) => {
+      let filtres = e.target.textContent;
+      nombre = target.length;
+      span.classList.remove("span_selected");
 
-        if (filtres === "Tous") {
-          createWorks(works);
-          span.classList.add("span_selected");
-        } else {
-          target[0].classList.remove("span_selected");
+      if (filtres === "Tous") {
+        createWorks(works);
+        span.classList.add("span_selected");
+      } else {
+        target[0].classList.remove("span_selected");
 
-          for (const span of target) {
-            span.classList.remove("span_selected");
-          }
-
-          //Flitrer les works
-          const newWorks = works.filter(
-            (work) => filtres === work.category.name
-          );
-          createWorks(newWorks);
+        for (const span of target) {
+          span.classList.remove("span_selected");
         }
-      });
-    }
+        span.classList.add("span_selected");
+
+        //Flitrer les works
+        const newWorks = works.filter((work) => filtres === work.category.name);
+        createWorks(newWorks);
+      }
+    });
   }
 }
 
-function changeBackgroundCat() {
-  console.log(filtres);
-}
+function changeBackgroundCat() {}
 
 function checkConnexion() {
   token = localStorage.getItem("tokenUSER");
