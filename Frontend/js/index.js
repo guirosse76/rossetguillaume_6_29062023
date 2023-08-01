@@ -17,6 +17,8 @@ fetch("http://localhost:5678/api/works")
         checkConnexion();
         // ajout des works dans la modal
         createWorksModal(works);
+        // ajout des elements de la modal ajoutPhoto
+        ajoutPhoto();
       });
   });
 
@@ -53,6 +55,40 @@ function createWorksModal(works) {
     figure.appendChild(img);
     figure.appendChild(figcaption);
   }
+
+  const divFooterModal = document.createElement("div");
+  divFooterModal.className = "divFooterModal";
+  const bar = document.createElement("hr");
+  bar.className = "bar-modal1";
+  worksModal.appendChild(divFooterModal);
+  divFooterModal.appendChild(bar);
+
+  const boutonAjoutPhoto = document.createElement("a");
+  boutonAjoutPhoto.className = "boutonAjoutPhoto js-modal .js-modal-close";
+  boutonAjoutPhoto.innerHTML = "Ajouter une photo";
+  boutonAjoutPhoto.setAttribute("href", "#modalAjoutPhoto");
+  divFooterModal.appendChild(boutonAjoutPhoto);
+
+  boutonAjoutPhoto.addEventListener("click", closeModal);
+  const suppGallery = document.createElement("a");
+  suppGallery.innerHTML = "Supprimer une galerie";
+  divFooterModal.appendChild(suppGallery);
+  eventModal();
+}
+
+function ajoutPhoto() {
+  const ajoutFiles = document.querySelector(".modal-ajout-photo");
+  const divElementFiles = document.createElement("div");
+  divElementFiles.className = "divElementFiles";
+  ajoutFiles.appendChild(divElementFiles);
+
+  const iconeFiles = document.createElement("i");
+  iconeFiles.className = "fa-light fa-image";
+  divElementFiles.appendChild(iconeFiles);
+  const inputFiles = document.createElement("input");
+  inputFiles.className = "inputFiles";
+
+  divElementFiles.appendChild(inputFiles);
 }
 
 function createCategories(cats, works) {
@@ -93,8 +129,6 @@ function createCategories(cats, works) {
   }
 }
 
-function changeBackgroundCat() {}
-
 function checkConnexion() {
   token = localStorage.getItem("tokenUSER");
   const login = document.getElementById("login");
@@ -134,7 +168,7 @@ function gestionModeEdition() {
   iconeImage.className = "fa-regular fa-pen-to-square";
   const modifImage = document.getElementById(introduction);
   const pImage = document.createElement("a");
-  pImage.setAttribute("href", "#modal1");
+  pImage.setAttribute("href", "#modalGaleriePhoto");
   pImage.className = "js-modal";
   pImage.innerHTML = "modifier";
   introduction.appendChild(divImage);
@@ -145,7 +179,7 @@ function gestionModeEdition() {
   const iconeProjet = document.createElement("i");
   iconeProjet.className = "fa-regular fa-pen-to-square";
   const aProjet = document.createElement("a");
-  aProjet.setAttribute("href", "#modal1");
+  aProjet.setAttribute("href", "#modalGaleriePhoto");
   aProjet.className = "js-modal";
   aProjet.innerHTML = "modifier";
   titre.appendChild(iconeProjet);

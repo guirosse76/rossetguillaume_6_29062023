@@ -23,7 +23,7 @@ const openModal = function (e) {
 //fonction closeModal pour fermer la modal
 const closeModal = function (e) {
   // on récupère la balise aside
-  const modal = e.target.closest("aside");
+  const modal = e.target.closest("section");
   // empeche le navigateur de se comporter convenablement
   e.preventDefault();
   //ajout du display none de la div
