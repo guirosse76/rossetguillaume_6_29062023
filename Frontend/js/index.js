@@ -64,7 +64,7 @@ function createWorksModal(works) {
   divFooterModal.appendChild(bar);
 
   const boutonAjoutPhoto = document.createElement("a");
-  boutonAjoutPhoto.className = "boutonAjoutPhoto js-modal .js-modal-close";
+  boutonAjoutPhoto.className = "boutonAjoutPhoto js-modal js-modal-close";
   boutonAjoutPhoto.innerHTML = "Ajouter une photo";
   boutonAjoutPhoto.setAttribute("href", "#modalAjoutPhoto");
   divFooterModal.appendChild(boutonAjoutPhoto);
@@ -77,18 +77,32 @@ function createWorksModal(works) {
 }
 
 function ajoutPhoto() {
+  const ajoutPhotoModal = document.querySelector(".header-modal-ajout-photo");
+  const lienFleche = document.createElement("a");
+  lienFleche.className = "lienFleche js-modal js-modal-close";
+  lienFleche.setAttribute("href", "#modalGaleriePhoto");
+  const fleche = document.createElement("i");
+  fleche.className = "fa-solid fa-arrow-left flecheRetour";
+  ajoutPhotoModal.appendChild(lienFleche);
+  lienFleche.appendChild(fleche);
+  lienFleche.addEventListener("click", closeModal);
+
   const ajoutFiles = document.querySelector(".modal-ajout-photo");
   const divElementFiles = document.createElement("div");
   divElementFiles.className = "divElementFiles";
   ajoutFiles.appendChild(divElementFiles);
-
   const iconeFiles = document.createElement("i");
-  iconeFiles.className = "fa-light fa-image";
+  iconeFiles.className = "fa-solid fa-image";
   divElementFiles.appendChild(iconeFiles);
-  const inputFiles = document.createElement("input");
-  inputFiles.className = "inputFiles";
-
-  divElementFiles.appendChild(inputFiles);
+  const boutonFiles = document.createElement("button");
+  boutonFiles.className = "boutonAjoutFiles";
+  boutonFiles.innerHTML = "+ Ajouter photo";
+  divElementFiles.appendChild(boutonFiles);
+  const pFiles = document.createElement("p");
+  pFiles.className = "pFiles";
+  pFiles.innerHTML = "jpg, png : 4mo max";
+  divElementFiles.appendChild(pFiles);
+  eventModal();
 }
 
 function createCategories(cats, works) {

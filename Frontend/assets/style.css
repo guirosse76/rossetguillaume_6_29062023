@@ -401,6 +401,19 @@ footer nav ul {
   justify-content: center;
   width: 100%;
   height: 100%;
+  margin: 0;
+}
+.modal2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
 }
 
 .modal-wrapper .header-modal {
@@ -409,9 +422,10 @@ footer nav ul {
   margin-bottom: 30px;
 }
 
-.modal-wrapper, .modal-ajout-photo {
-  height: 731px;
-  width: 45%;
+.modal-wrapper,
+.modal-ajout-photo {
+  height: 95%;
+  width: 35%;
   background-color: white;
   max-width: calc(100vw - 20px);
   max-height: calc(100vh - 20px);
@@ -429,13 +443,74 @@ footer nav ul {
   right: 27px;
 }
 
-.header-modal, .modal-ajout-photo , h1 {
+.modal-ajout-photo{
+  display: flex;
+  align-items:  center;
+}
+.header-modal h2{
   text-align: center;
   font-size: 26px;
   font-weight: 400;
   color: black;
   font-family: work sans-serif;
-  margin-top: 25px;
+  margin-top: 55px;
+}
+
+.header-modal-ajout-photo {
+  position: relative;
+  width: 100%;
+}
+
+.header-modal-ajout-photo h2{
+  text-align: center;
+  font-size: 26px;
+  font-weight: 400;
+  color: black;
+  font-family: work sans-serif;
+  margin-top: 55px;
+}
+
+.header-modal-ajout-photo .croixAjoutPhoto {
+  position: absolute;
+  top: 20px;
+  right: 27px;
+  font-size: 20px;
+}
+
+a .flecheRetour {
+  position: absolute;
+  top: 20px;
+  left: 27px;
+  font-size: 22px;
+}
+
+.modal-ajout-photo .divElementFiles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e8f1f6;
+  padding: 20px 50px;
+  margin-top: 34px;
+  gap: 6px;
+  width: 50%;
+}
+
+.divElementFiles .boutonAjoutFiles {
+  height: 36px;
+  width: 173px;
+  border-radius: 50px;
+  background-color: #cbd6dc;
+  margin-top: 15px;
+}
+
+.divElementFiles i {
+  color: #b9c5cc;
+  font-size: 55px;
+}
+
+.divElementFiles .pFiles {
+  color : #444444;
+  font-size: 11px;
 }
 
 .modal-wrapper img {
@@ -454,16 +529,16 @@ footer nav ul {
   margin: 0px 81px;
 }
 
-.divFooterModal{
-	display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.divFooterModal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.divFooterModal a{
-	color: #D65353;
-	margin-top: 26px;
+.divFooterModal a {
+  color: #d65353;
+  margin-top: 26px;
 }
 .divFooterModal .bar-modal1 {
   width: 70%;
@@ -473,28 +548,15 @@ footer nav ul {
 }
 
 .divFooterModal .boutonAjoutPhoto {
-	width:45%;
-	margin-top: 20px;
-	height: 36px;
-display: flex;
-justify-content: center;
-align-items: center;
+  width: 45%;
+  margin-top: 20px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   color: white;
   background-color: #1d6154;
   border-radius: 60px;
   border: 1px solid #1d6154;
-}
-
-
- {
-  height: 731px;
-  width: 45%;
-  background-color: white;
-  max-width: calc(100vw - 20px);
-  max-height: calc(100vh - 20px);
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
 }

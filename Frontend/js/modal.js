@@ -55,3 +55,7 @@ function eventModal() {
     a.addEventListener("click", openModal);
   });
 }
+
+function retourne() {
+  window.history.back;
+}
