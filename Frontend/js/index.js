@@ -102,6 +102,32 @@ function ajoutPhoto() {
   pFiles.className = "pFiles";
   pFiles.innerHTML = "jpg, png : 4mo max";
   divElementFiles.appendChild(pFiles);
+
+  const divLabels = document.createElement("div");
+  divLabels.className = "divLabels";
+  labelTitre = document.createElement("label");
+  labelTitre.innerHTML = "Titre";
+  inputTitre = document.createElement("input");
+  inputTitre.className = "inputTitre";
+
+  const labelCategorie = document.createElement("label");
+  labelCategorie.innerHTML = "Catégorie";
+  const inputCategorie = document.createElement("input");
+  inputCategorie.className = "inputCategorie";
+
+  const barModalAjoutPhoto = document.createElement("hr");
+  barModalAjoutPhoto.className = "bar-modal2";
+
+  const boutonAjoutPhoto = document.createElement("button");
+  boutonAjoutPhoto.className = "boutonAjoutPhoto";
+  boutonAjoutPhoto.innerHTML = "Valider";
+  ajoutFiles.appendChild(divLabels);
+  divLabels.appendChild(labelTitre);
+  divLabels.appendChild(inputTitre);
+  divLabels.appendChild(labelCategorie);
+  divLabels.appendChild(inputCategorie);
+  divLabels.appendChild(barModalAjoutPhoto);
+  divLabels.appendChild(boutonAjoutPhoto);
   eventModal();
 }
 
