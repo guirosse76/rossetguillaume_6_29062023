@@ -2,8 +2,10 @@
 const openModal = function (e) {
   // empeche le navigateur de se comporter convenablement
   e.preventDefault();
+  // pour récupérer la balise a contenant la fleche
+  let targetElt = e.target.closest("a");
   // pour récupérer #modal1
-  const modal = document.querySelector(e.target.getAttribute("href"));
+  const modal = document.querySelector(targetElt.getAttribute("href"));
   //enleve le display none de la div
   modal.style.display = null;
   // supprimer l'attribut aria-hidden pour rendre visible l'element
@@ -54,8 +56,4 @@ function eventModal() {
   document.querySelectorAll(".js-modal").forEach((a) => {
     a.addEventListener("click", openModal);
   });
-}
-
-function retourne() {
-  window.history.back;
 }

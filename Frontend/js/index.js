@@ -18,7 +18,7 @@ fetch("http://localhost:5678/api/works")
         // ajout des works dans la modal
         createWorksModal(works);
         // ajout des elements de la modal ajoutPhoto
-        ajoutPhoto();
+        ajoutPhoto(cats);
       });
   });
 
@@ -64,19 +64,24 @@ function createWorksModal(works) {
   divFooterModal.appendChild(bar);
 
   const boutonAjoutPhoto = document.createElement("a");
-  boutonAjoutPhoto.className = "boutonAjoutPhoto js-modal js-modal-close";
+  // boutonAjoutPhoto.className = "boutonAjoutPhoto js-modal js-modal-close";
+  boutonAjoutPhoto.className = "boutonAjoutPhoto ";
   boutonAjoutPhoto.innerHTML = "Ajouter une photo";
   boutonAjoutPhoto.setAttribute("href", "#modalAjoutPhoto");
   divFooterModal.appendChild(boutonAjoutPhoto);
 
-  boutonAjoutPhoto.addEventListener("click", closeModal);
+  // boutonAjoutPhoto.addEventListener("click", closeModal);
+  boutonAjoutPhoto.addEventListener("click", (e) => {
+    closeModal(e);
+    openModal(e);
+  });
   const suppGallery = document.createElement("a");
   suppGallery.innerHTML = "Supprimer une galerie";
   divFooterModal.appendChild(suppGallery);
-  eventModal();
+  // eventModal();
 }
 
-function ajoutPhoto() {
+function ajoutPhoto(cats) {
   const ajoutPhotoModal = document.querySelector(".header-modal-ajout-photo");
   const lienFleche = document.createElement("a");
   lienFleche.className = "lienFleche js-modal js-modal-close";
@@ -85,7 +90,11 @@ function ajoutPhoto() {
   fleche.className = "fa-solid fa-arrow-left flecheRetour";
   ajoutPhotoModal.appendChild(lienFleche);
   lienFleche.appendChild(fleche);
-  lienFleche.addEventListener("click", closeModal);
+  // lienFleche.addEventListener("click", closeModal);
+  lienFleche.addEventListener("click", (e) => {
+    closeModal(e);
+    openModal(e);
+  });
 
   const ajoutFiles = document.querySelector(".modal-ajout-photo");
   const divElementFiles = document.createElement("div");
@@ -94,75 +103,111 @@ function ajoutPhoto() {
   const iconeFiles = document.createElement("i");
   iconeFiles.className = "fa-solid fa-image";
   divElementFiles.appendChild(iconeFiles);
-  const boutonFiles = document.createElement("button");
+  const boutonFiles = document.createElement("input");
   boutonFiles.className = "boutonAjoutFiles";
   boutonFiles.innerHTML = "+ Ajouter photo";
+  boutonFiles.type = "file";
   divElementFiles.appendChild(boutonFiles);
+  inputBoutonFiles = document.createElement("input");
+  inputBoutonFiles.className = "inputBoutonFiles";
+
+  divElementFiles.appendChild(inputBoutonFiles);
   const pFiles = document.createElement("p");
   pFiles.className = "pFiles";
   pFiles.innerHTML = "jpg, png : 4mo max";
   divElementFiles.appendChild(pFiles);
 
+  // création de la div qui va avoir tout les elements input
   const divLabels = document.createElement("div");
   divLabels.className = "divLabels";
+
+  // création du champ input titre avec son label
   labelTitre = document.createElement("label");
-  labelTitre.innerHTML = "Titre";
+  labelTitre.innerHTML = "Titre :";
   inputTitre = document.createElement("input");
   inputTitre.className = "inputTitre";
 
-  const labelCategorie = document.createElement("label");
-  labelCategorie.innerHTML = "Catégorie";
-  const inputCategorie = document.createElement("input");
-  inputCategorie.className = "inputCategorie";
+  // création de la liste déroulante avec toutes les categories sauf tous
+  const select = document.createElement("select");
+  select.name = "cats";
+  select.id = "cats";
+  for (const val of cats) {
+    if (val.id !== 0) {
+      const option = document.createElement("option");
+      option.value = val.id;
+      option.text = val.name;
+      select.appendChild(option);
+    }
+  }
+  const label = document.createElement("label");
+  label.innerHTML = "Catégorie :";
+  label.htmlFor = "cats";
 
+  // creation de la barre dans modalAjoutPhoto
   const barModalAjoutPhoto = document.createElement("hr");
   barModalAjoutPhoto.className = "bar-modal2";
 
+  // creation du bouton valider dans modalAjoutPhoto
   const boutonAjoutPhoto = document.createElement("button");
   boutonAjoutPhoto.className = "boutonAjoutPhoto";
   boutonAjoutPhoto.innerHTML = "Valider";
+
+  // assemblage de tout les elements a rattacher a divLbales
   ajoutFiles.appendChild(divLabels);
   divLabels.appendChild(labelTitre);
   divLabels.appendChild(inputTitre);
-  divLabels.appendChild(labelCategorie);
-  divLabels.appendChild(inputCategorie);
+  divLabels.appendChild(label);
+  divLabels.appendChild(select);
   divLabels.appendChild(barModalAjoutPhoto);
   divLabels.appendChild(boutonAjoutPhoto);
-  eventModal();
+
+  // verifFormAjoutPhoto();
+  // });
 }
 
+// function verifFormAjoutPhoto() {
+//   if (inputTitre != null) {
+//     boutonAjoutPhoto.style = "backgroundColor : green";
+//   }
+// }
+
 function createCategories(cats, works) {
+  // on selectionne l'element avec la classe .Categorie
   const categorie = document.querySelector(".categorie");
 
+  // boucle pour générer les catégories
   for (const cat of cats) {
+    // création d'un element span
     let span = document.createElement("span");
+    // ajout du contenu de la span avec le cat.name
     span.textContent = cat.name;
+    // ajout de la classe span
     span.className = "span";
+    // rattachement à l'element categorie
     categorie.appendChild(span);
 
-    const target = document.querySelectorAll(".span");
-    const spanSelected = document.querySelectorAll(".span_selected");
-    span.classList.add("span");
-    target[0].classList.add("span_selected");
-
+    // si le nom de la catégorie est tous alors ajouter la classe span_selected
+    if (cat.name === "Tous") {
+      span.classList.add("span_selected");
+    }
+    // ajout d'un addEventListener sur chaque span
     span.addEventListener("click", (e) => {
+      // on récupère le texte de la span cliqué
       let filtres = e.target.textContent;
-      nombre = target.length;
-      span.classList.remove("span_selected");
+      // on supprime la classe .span_selected
+      document
+        .querySelector(".span_selected")
+        .classList.remove("span_selected");
+      // on ajoute la classe span_selected
+      span.classList.add("span_selected");
 
+      // si on a cliqué sur tous alors appel de la fonction createWorks
       if (filtres === "Tous") {
         createWorks(works);
-        span.classList.add("span_selected");
       } else {
-        target[0].classList.remove("span_selected");
-
-        for (const span of target) {
-          span.classList.remove("span_selected");
-        }
-        span.classList.add("span_selected");
-
-        //Flitrer les works
+        //Flitrer les works par le nom de la catégorie
         const newWorks = works.filter((work) => filtres === work.category.name);
+        // appel de la fonction createWorks avec en paramètre les works filtres
         createWorks(newWorks);
       }
     });
@@ -170,7 +215,9 @@ function createCategories(cats, works) {
 }
 
 function checkConnexion() {
+  // récupération du token stocké dans le localStorage avec le nom tokenUSER
   token = localStorage.getItem("tokenUSER");
+  // récupération de
   const login = document.getElementById("login");
   if (token) {
     login.innerHTML = "logout";
@@ -224,5 +271,8 @@ function gestionModeEdition() {
   aProjet.innerHTML = "modifier";
   titre.appendChild(iconeProjet);
   titre.appendChild(aProjet);
+
+  let test = (document.querySelector.categorie.span = remove);
+  console.log(test);
   eventModal();
 }

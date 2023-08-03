@@ -504,11 +504,12 @@ a .flecheRetour {
     gap: 15px;
 }
 
-.divLabels input {
+.divLabels input, select {
   box-shadow: 0px 4px 14px 0px #00000017;
 background-color: white;
 height: 51px;
 border: 0px;
+
 }
 .divElementFiles .boutonAjoutFiles {
   height: 36px;
@@ -516,7 +517,13 @@ border: 0px;
   border-radius: 50px;
   background-color: #cbd6dc;
   margin-top: 15px;
+ 
 }
+
+.divElementFiles .inputBoutonFiles {
+display: none;
+}
+
 
 .divElementFiles i {
   color: #b9c5cc;
