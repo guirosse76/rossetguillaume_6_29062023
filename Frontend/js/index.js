@@ -42,9 +42,30 @@ function createWorksModal(works) {
   const worksModal = document.querySelector(".modal-wrapper");
   const div = document.createElement("div");
   div.className = "worksModal";
+  const poubelle = document.querySelectorAll(".poubelle");
+
   for (const work of works) {
     const figure = document.createElement("figure");
     const img = document.createElement("img");
+    const iconePoubelle = document.createElement("i");
+    iconePoubelle.className = "fa-regular fa-trash-can poubelle";
+
+    iconePoubelle.addEventListener("click", (e) => {
+      let monTokenTest = localStorage.getItem("tokenUSER");
+
+      console.log(work.id);
+      fetch(`http://localhost:5678/api/works/${work.id}`, {
+        // "Content-Type": "application/json",
+        // Accept: "application / json",
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer ${monTokenTest}",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => console.log("fuck"));
+    });
+
     const figcaption = document.createElement("figcaption");
 
     img.src = work.imageUrl;
@@ -53,6 +74,7 @@ function createWorksModal(works) {
     worksModal.appendChild(div);
     div.appendChild(figure);
     figure.appendChild(img);
+    figure.appendChild(iconePoubelle);
     figure.appendChild(figcaption);
   }
 
@@ -90,7 +112,6 @@ function ajoutPhoto(cats) {
   fleche.className = "fa-solid fa-arrow-left flecheRetour";
   ajoutPhotoModal.appendChild(lienFleche);
   lienFleche.appendChild(fleche);
-  // lienFleche.addEventListener("click", closeModal);
   lienFleche.addEventListener("click", (e) => {
     closeModal(e);
     openModal(e);
@@ -100,18 +121,41 @@ function ajoutPhoto(cats) {
   const divElementFiles = document.createElement("div");
   divElementFiles.className = "divElementFiles";
   ajoutFiles.appendChild(divElementFiles);
+  const divPreview = document.createElement("div");
+  divPreview.className = "divPreview";
   const iconeFiles = document.createElement("i");
   iconeFiles.className = "fa-solid fa-image";
-  divElementFiles.appendChild(iconeFiles);
-  const boutonFiles = document.createElement("input");
-  boutonFiles.className = "boutonAjoutFiles";
-  boutonFiles.innerHTML = "+ Ajouter photo";
-  boutonFiles.type = "file";
-  divElementFiles.appendChild(boutonFiles);
-  inputBoutonFiles = document.createElement("input");
-  inputBoutonFiles.className = "inputBoutonFiles";
+  divElementFiles.appendChild(divPreview);
+  divPreview.appendChild(iconeFiles);
 
-  divElementFiles.appendChild(inputBoutonFiles);
+  const inputFiles = document.createElement("input");
+  inputFiles.className = "inputFiles";
+  inputFiles.type = "file";
+  inputFiles.accept = ".jpg, .png";
+  divElementFiles.appendChild(inputFiles);
+  inputFiles.addEventListener("change", function () {
+    iconeFiles.style = "display : none";
+    inputFiles.style = "display : none";
+    spanBoutonFiles.style = "display : none";
+
+    const image = this.files[0];
+    console.log(image);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const imgUrl = reader.result;
+      const img = document.createElement("img");
+      img.src = imgUrl;
+      divPreview.appendChild(img);
+      console.log(imgUrl);
+    };
+    reader.readAsDataURL(image);
+  });
+
+  spanBoutonFiles = document.createElement("span");
+  spanBoutonFiles.className = "spanBoutonFiles";
+  spanBoutonFiles.innerHTML = "+ Ajouter photo";
+
+  divElementFiles.appendChild(spanBoutonFiles);
   const pFiles = document.createElement("p");
   pFiles.className = "pFiles";
   pFiles.innerHTML = "jpg, png : 4mo max";
@@ -272,7 +316,7 @@ function gestionModeEdition() {
   titre.appendChild(iconeProjet);
   titre.appendChild(aProjet);
 
-  let test = (document.querySelector.categorie.span = remove);
-  console.log(test);
+  let test = document.querySelector(".categorie");
+  test.style = "display : none;";
   eventModal();
 }

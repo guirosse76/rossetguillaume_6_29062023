@@ -27,7 +27,7 @@ form.addEventListener("submit", () => {
 
     .catch((error) => {
       if (error.status === "401") {
-        console.log("dieuenisse");
+        console.log("401");
       }
     });
 });

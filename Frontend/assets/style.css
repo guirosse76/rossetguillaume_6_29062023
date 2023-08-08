@@ -434,6 +434,12 @@ footer nav ul {
   flex-direction: column;
   border-radius: 10px;
 }
+.modal-wrapper .poubelle {
+  color: white;
+  top: 6px;
+  right: 5px;
+  background-color: black;
+}
 
 .modal-wrapper i {
   font-size: 20px;
@@ -441,6 +447,14 @@ footer nav ul {
   position: absolute;
   top: 20px;
   right: 27px;
+}
+
+.modal-wrapper figure {
+  position:  relative;
+}
+
+.modal-wrapper img {
+  position: relative;
 }
 
 .modal-ajout-photo{
@@ -511,19 +525,42 @@ height: 51px;
 border: 0px;
 
 }
-.divElementFiles .boutonAjoutFiles {
+
+.divElementFiles{
+  position: relative;
+}
+
+.divElementFiles .inputFiles {
+
+height: 36px;
+width: 173px;
+border-radius: 50px;
+background-color: #cbd6dc;
+margin-top: 15px;
+display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #306685;
+  z-index: 1;
+  opacity: 0;
+}
+
+
+.divElementFiles .spanBoutonFiles {
   height: 36px;
   width: 173px;
   border-radius: 50px;
   background-color: #cbd6dc;
   margin-top: 15px;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #306685;
+    z-index: 0;
+    position: absolute;
+    top: 80px;
  
 }
-
-.divElementFiles .inputBoutonFiles {
-display: none;
-}
-
 
 .divElementFiles i {
   color: #b9c5cc;
@@ -547,7 +584,13 @@ display: none;
   height: 36px;
   width: 60%;
   margin-left: 85px;
+  border: 0;
 
+}
+
+.divElementFiles .divPreview img {
+width: 100%;
+object-fit: cover;
 }
 
 .modal-wrapper img {
