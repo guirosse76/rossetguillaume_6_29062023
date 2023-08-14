@@ -1,0 +1,16 @@
+{
+  "folders": [
+	{
+		"path": ".."
+	},
+	{
+		"path": "../../../PROJET-4/rossetguillaume_4_09052023"
+	},
+	{
+		"path": "../../../PROJET-5/rossetguillaume_5_15062023"
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "rossetguillaume_6_29062023"
+  }
+}

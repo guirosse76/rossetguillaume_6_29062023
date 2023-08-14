@@ -502,11 +502,18 @@ a .flecheRetour {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #e8f1f6;
+ 
   padding: 20px 50px;
   margin-top: 34px;
   gap: 6px;
-  width: 50%;
+position: relative;
+}
+.modal-ajout-photo .divPreview {
+  background-color: #e8f1f6;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .divLabels {
@@ -523,12 +530,11 @@ a .flecheRetour {
 background-color: white;
 height: 51px;
 border: 0px;
+width: 95%;
 
 }
 
-.divElementFiles{
-  position: relative;
-}
+
 
 .divElementFiles .inputFiles {
 
@@ -586,6 +592,10 @@ display: flex;
   margin-left: 85px;
   border: 0;
 
+}
+
+.boutonAjoutPhoto:disabled{
+  background-color: #A7A7A7;
 }
 
 .divElementFiles .divPreview img {

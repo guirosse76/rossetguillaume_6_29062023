@@ -1,26 +1,30 @@
 // gestion de l'affichage des images avec le titre
-fetch("http://localhost:5678/api/works")
-  .then((data) => data.json())
-  .then((works) => {
-    fetch("http://localhost:5678/api/categories")
-      .then((data) => data.json())
-      .then((cats) => {
-        //Créer les works dans le HTML
-        createWorks(works);
-        //Ajout du bouton Tous en premier
-        const allCat = { id: 0, name: "Tous" };
-        cats.unshift(allCat);
+function init() {
+  fetch("http://localhost:5678/api/works")
+    .then((data) => data.json())
+    .then((works) => {
+      fetch("http://localhost:5678/api/categories")
+        .then((data) => data.json())
+        .then((cats) => {
+          //Créer les works dans le HTML
+          createWorks(works);
+          //Ajout du bouton Tous en premier
+          const allCat = { id: 0, name: "Tous" };
+          cats.unshift(allCat);
 
-        // création des catégorie et des projets
-        createCategories(cats, works);
-        // vérification si la personne est connecté
-        checkConnexion();
-        // ajout des works dans la modal
-        createWorksModal(works);
-        // ajout des elements de la modal ajoutPhoto
-        ajoutPhoto(cats);
-      });
-  });
+          // création des catégorie et des projets
+          createCategories(cats, works);
+          // vérification si la personne est connecté
+          checkConnexion();
+          // ajout des works dans la modal
+          createWorksModal(works);
+          // ajout des elements de la modal ajoutPhoto
+          ajoutPhoto(cats);
+        });
+    });
+}
+
+init();
 
 function createWorks(works) {
   const gallery = document.querySelector(".gallery");
@@ -51,19 +55,22 @@ function createWorksModal(works) {
     iconePoubelle.className = "fa-regular fa-trash-can poubelle";
 
     iconePoubelle.addEventListener("click", (e) => {
-      let monTokenTest = localStorage.getItem("tokenUSER");
-
+      let token = JSON.parse(localStorage.getItem("tokenUSER"));
+      console.log(token);
       console.log(work.id);
       fetch(`http://localhost:5678/api/works/${work.id}`, {
         // "Content-Type": "application/json",
         // Accept: "application / json",
         method: "DELETE",
         headers: {
-          Authorization: "Bearer ${monTokenTest}",
+          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => response.json())
-        .then((json) => console.log("fuck"));
+        .then((json) => {
+          init();
+          console.log("test");
+        });
     });
 
     const figcaption = document.createElement("figcaption");
@@ -118,7 +125,7 @@ function ajoutPhoto(cats) {
   });
 
   const ajoutFiles = document.querySelector(".modal-ajout-photo");
-  const divElementFiles = document.createElement("div");
+  const divElementFiles = document.createElement("form");
   divElementFiles.className = "divElementFiles";
   ajoutFiles.appendChild(divElementFiles);
   const divPreview = document.createElement("div");
@@ -137,16 +144,16 @@ function ajoutPhoto(cats) {
     iconeFiles.style = "display : none";
     inputFiles.style = "display : none";
     spanBoutonFiles.style = "display : none";
+    pFiles.style = "display : none";
 
     const image = this.files[0];
-    console.log(image);
+
     const reader = new FileReader();
     reader.onload = () => {
       const imgUrl = reader.result;
       const img = document.createElement("img");
       img.src = imgUrl;
       divPreview.appendChild(img);
-      console.log(imgUrl);
     };
     reader.readAsDataURL(image);
   });
@@ -159,7 +166,9 @@ function ajoutPhoto(cats) {
   const pFiles = document.createElement("p");
   pFiles.className = "pFiles";
   pFiles.innerHTML = "jpg, png : 4mo max";
-  divElementFiles.appendChild(pFiles);
+  divPreview.appendChild(inputFiles);
+  divPreview.appendChild(spanBoutonFiles);
+  divPreview.appendChild(pFiles);
 
   // création de la div qui va avoir tout les elements input
   const divLabels = document.createElement("div");
@@ -195,9 +204,10 @@ function ajoutPhoto(cats) {
   const boutonAjoutPhoto = document.createElement("button");
   boutonAjoutPhoto.className = "boutonAjoutPhoto";
   boutonAjoutPhoto.innerHTML = "Valider";
+  boutonAjoutPhoto.disabled = true;
 
   // assemblage de tout les elements a rattacher a divLbales
-  ajoutFiles.appendChild(divLabels);
+  divElementFiles.appendChild(divLabels);
   divLabels.appendChild(labelTitre);
   divLabels.appendChild(inputTitre);
   divLabels.appendChild(label);
@@ -205,15 +215,27 @@ function ajoutPhoto(cats) {
   divLabels.appendChild(barModalAjoutPhoto);
   divLabels.appendChild(boutonAjoutPhoto);
 
-  // verifFormAjoutPhoto();
-  // });
+  // verifFormAjoutPhoto(inputFiles);
 }
 
-// function verifFormAjoutPhoto() {
-//   if (inputTitre != null) {
-//     boutonAjoutPhoto.style = "backgroundColor : green";
+// function verifFormAjoutPhoto(inputFiles) {
+//   if (inputFiles && inputTitre !== null) {
+//     boutonAjoutPhoto.style = "backgroundcolor : green";
 //   }
 // }
+
+function envoiData() {
+  fetch(`http://localhost:5678/api/works/`, {
+    // "Content-Type": "application/json",
+    // Accept: "application / json",
+    method: "POST",
+    headers: {
+      Authorization: "Bearer ${monTokenTest}",
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => console.log("test"));
+}
 
 function createCategories(cats, works) {
   // on selectionne l'element avec la classe .Categorie
