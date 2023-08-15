@@ -51,16 +51,14 @@ function createWorksModal(works) {
   for (const work of works) {
     const figure = document.createElement("figure");
     const img = document.createElement("img");
+    // creation de l'icone poubelle pour la suppresion de photo
     const iconePoubelle = document.createElement("i");
     iconePoubelle.className = "fa-regular fa-trash-can poubelle";
-
     iconePoubelle.addEventListener("click", (e) => {
       let token = JSON.parse(localStorage.getItem("tokenUSER"));
       console.log(token);
       console.log(work.id);
       fetch(`http://localhost:5678/api/works/${work.id}`, {
-        // "Content-Type": "application/json",
-        // Accept: "application / json",
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -92,14 +90,12 @@ function createWorksModal(works) {
   worksModal.appendChild(divFooterModal);
   divFooterModal.appendChild(bar);
 
+  // creation du bouton ajoutPhoto dans la modal GalleryPhoto + le lien supprimer une galerie
   const boutonAjoutPhoto = document.createElement("a");
-  // boutonAjoutPhoto.className = "boutonAjoutPhoto js-modal js-modal-close";
   boutonAjoutPhoto.className = "boutonAjoutPhoto ";
   boutonAjoutPhoto.innerHTML = "Ajouter une photo";
   boutonAjoutPhoto.setAttribute("href", "#modalAjoutPhoto");
   divFooterModal.appendChild(boutonAjoutPhoto);
-
-  // boutonAjoutPhoto.addEventListener("click", closeModal);
   boutonAjoutPhoto.addEventListener("click", (e) => {
     closeModal(e);
     openModal(e);
@@ -107,9 +103,9 @@ function createWorksModal(works) {
   const suppGallery = document.createElement("a");
   suppGallery.innerHTML = "Supprimer une galerie";
   divFooterModal.appendChild(suppGallery);
-  // eventModal();
 }
 
+// fonction pour la creation et gestion de la modal ajout photo
 function ajoutPhoto(cats) {
   const ajoutPhotoModal = document.querySelector(".header-modal-ajout-photo");
   const lienFleche = document.createElement("a");
@@ -124,6 +120,7 @@ function ajoutPhoto(cats) {
     openModal(e);
   });
 
+  // creation des différents elements pour ma modal ajout photo
   const ajoutFiles = document.querySelector(".modal-ajout-photo");
   const divElementFiles = document.createElement("form");
   divElementFiles.className = "divElementFiles";
@@ -135,19 +132,21 @@ function ajoutPhoto(cats) {
   divElementFiles.appendChild(divPreview);
   divPreview.appendChild(iconeFiles);
 
+  // creation de mon input caché qui permet de charger l'image
   const inputFiles = document.createElement("input");
   inputFiles.className = "inputFiles";
   inputFiles.type = "file";
   inputFiles.accept = ".jpg, .png";
   divElementFiles.appendChild(inputFiles);
+
+  // gestion de mon input pour l'img preview
   inputFiles.addEventListener("change", function () {
+    divPreview.style = "padding-top : 0px";
     iconeFiles.style = "display : none";
     inputFiles.style = "display : none";
     spanBoutonFiles.style = "display : none";
     pFiles.style = "display : none";
-
     const image = this.files[0];
-
     const reader = new FileReader();
     reader.onload = () => {
       const imgUrl = reader.result;
@@ -158,10 +157,10 @@ function ajoutPhoto(cats) {
     reader.readAsDataURL(image);
   });
 
+  // creation du bouton ajouter photo + le texte en dessous
   spanBoutonFiles = document.createElement("span");
   spanBoutonFiles.className = "spanBoutonFiles";
   spanBoutonFiles.innerHTML = "+ Ajouter photo";
-
   divElementFiles.appendChild(spanBoutonFiles);
   const pFiles = document.createElement("p");
   pFiles.className = "pFiles";
@@ -215,26 +214,29 @@ function ajoutPhoto(cats) {
   divLabels.appendChild(barModalAjoutPhoto);
   divLabels.appendChild(boutonAjoutPhoto);
 
-  // verifFormAjoutPhoto(inputFiles);
+  verifFormAjoutPhoto(inputTitre);
 }
 
-// function verifFormAjoutPhoto(inputFiles) {
-//   if (inputFiles && inputTitre !== null) {
-//     boutonAjoutPhoto.style = "backgroundcolor : green";
-//   }
-// }
+function verifFormAjoutPhoto(inputTitre) {
+  boutonAjoutPhoto = document.querySelector(".boutonAjoutPhoto");
+  if (inputTitre == !undefined) {
+    boutonAjoutPhoto.disabled = false;
+    boutonAjoutPhoto.style = "color : black";
+  }
+}
 
 function envoiData() {
   fetch(`http://localhost:5678/api/works/`, {
-    // "Content-Type": "application/json",
-    // Accept: "application / json",
     method: "POST",
     headers: {
-      Authorization: "Bearer ${monTokenTest}",
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => response.json())
-    .then((json) => console.log("test"));
+    .then((json) => {
+      const form = document.querySelector("divElementFiles");
+      console.log(form);
+    });
 }
 
 function createCategories(cats, works) {

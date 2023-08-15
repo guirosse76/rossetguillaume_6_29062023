@@ -439,6 +439,10 @@ footer nav ul {
   top: 6px;
   right: 5px;
   background-color: black;
+  font-size: 13px;
+  border-radius: 5px;
+  padding: 3px;
+  color: white;
 }
 
 .modal-wrapper i {
@@ -502,8 +506,7 @@ a .flecheRetour {
   display: flex;
   flex-direction: column;
   align-items: center;
- 
-  padding: 20px 50px;
+  width: 100%;
   margin-top: 34px;
   gap: 6px;
 position: relative;
@@ -514,6 +517,8 @@ position: relative;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 80%;
+    padding-top: 12px;
 }
 
 .divLabels {
