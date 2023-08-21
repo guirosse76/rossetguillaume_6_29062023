@@ -44,6 +44,8 @@ function createWorks(works) {
 
 function createWorksModal(works) {
   const worksModal = document.querySelector(".modal-wrapper");
+  worksModal.innerHTML = "";
+
   const div = document.createElement("div");
   div.className = "worksModal";
   const poubelle = document.querySelectorAll(".poubelle");
@@ -51,38 +53,51 @@ function createWorksModal(works) {
   for (const work of works) {
     const figure = document.createElement("figure");
     const img = document.createElement("img");
+
     // creation de l'icone poubelle pour la suppresion de photo
-    const iconePoubelle = document.createElement("i");
-    iconePoubelle.className = "fa-regular fa-trash-can poubelle";
-    iconePoubelle.addEventListener("click", (e) => {
-      let token = JSON.parse(localStorage.getItem("tokenUSER"));
-      console.log(token);
-      console.log(work.id);
-      fetch(`http://localhost:5678/api/works/${work.id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          init();
-          console.log("test");
-        });
-    });
+    gestionPoubelleDelete();
 
-    const figcaption = document.createElement("figcaption");
-
-    img.src = work.imageUrl;
-    figcaption.textContent = "éditer";
-
-    worksModal.appendChild(div);
-    div.appendChild(figure);
-    figure.appendChild(img);
-    figure.appendChild(iconePoubelle);
-    figure.appendChild(figcaption);
+    //création des éléments html sur les works dans la modal (figcaption)
+    figcaptionWorksModal();
   }
+  // création des différents éléments html modal galeriePhoto
+  htmlWorksModal();
+}
 
+function gestionPoubelleDelete() {
+  // creation de l'icone poubelle pour la suppresion de photo
+  const iconePoubelle = document.createElement("i");
+  iconePoubelle.className = "fa-regular fa-trash-can poubelle";
+  iconePoubelle.addEventListener("click", (e) => {
+    let token = JSON.parse(localStorage.getItem("tokenUSER"));
+    fetch(`http://localhost:5678/api/works/${work.id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        init();
+      });
+  });
+}
+
+//création des éléments html sur les works dans la modal
+function figcaptionWorksModal() {
+  const figcaption = document.createElement("figcaption");
+  img.src = work.imageUrl;
+  figcaption.textContent = "éditer";
+
+  worksModal.appendChild(div);
+  div.appendChild(figure);
+  figure.appendChild(img);
+  figure.appendChild(iconePoubelle);
+  figure.appendChild(figcaption);
+}
+
+// création des différents éléments html modal galeriePhoto
+function htmlWorksModal() {
   const divFooterModal = document.createElement("div");
   divFooterModal.className = "divFooterModal";
   const bar = document.createElement("hr");
@@ -105,7 +120,7 @@ function createWorksModal(works) {
   divFooterModal.appendChild(suppGallery);
 }
 
-// fonction pour la creation et gestion de la modal ajout photo
+// fonction pour la modal ajout photo
 function ajoutPhoto(cats) {
   const ajoutPhotoModal = document.querySelector(".header-modal-ajout-photo");
   const lienFleche = document.createElement("a");
@@ -121,116 +136,69 @@ function ajoutPhoto(cats) {
   });
 
   // creation des différents elements pour ma modal ajout photo
-  const ajoutFiles = document.querySelector(".modal-ajout-photo");
-  const divElementFiles = document.createElement("form");
-  divElementFiles.className = "divElementFiles";
-  ajoutFiles.appendChild(divElementFiles);
-  const divPreview = document.createElement("div");
-  divPreview.className = "divPreview";
-  const iconeFiles = document.createElement("i");
-  iconeFiles.className = "fa-solid fa-image";
-  divElementFiles.appendChild(divPreview);
-  divPreview.appendChild(iconeFiles);
-
-  // creation de mon input caché qui permet de charger l'image
-  const inputFiles = document.createElement("input");
-  inputFiles.className = "inputFiles";
-  inputFiles.type = "file";
-  inputFiles.accept = ".jpg, .png";
-  divElementFiles.appendChild(inputFiles);
+  htmlModalAjoutPhoto(); // fichier modal.js
 
   // gestion de mon input pour l'img preview
   inputFiles.addEventListener("change", function () {
-    divPreview.style = "padding-top : 0px";
-    iconeFiles.style = "display : none";
-    inputFiles.style = "display : none";
-    spanBoutonFiles.style = "display : none";
-    pFiles.style = "display : none";
-    const image = this.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      const imgUrl = reader.result;
-      const img = document.createElement("img");
-      img.src = imgUrl;
-      divPreview.appendChild(img);
-    };
-    reader.readAsDataURL(image);
+    imgPreview(); // fichier index.js
   });
 
   // creation du bouton ajouter photo + le texte en dessous
-  spanBoutonFiles = document.createElement("span");
-  spanBoutonFiles.className = "spanBoutonFiles";
-  spanBoutonFiles.innerHTML = "+ Ajouter photo";
-  divElementFiles.appendChild(spanBoutonFiles);
-  const pFiles = document.createElement("p");
-  pFiles.className = "pFiles";
-  pFiles.innerHTML = "jpg, png : 4mo max";
-  divPreview.appendChild(inputFiles);
-  divPreview.appendChild(spanBoutonFiles);
-  divPreview.appendChild(pFiles);
+  creationBoutonAjoutPhoto(); // fichier modal.js
 
-  // création de la div qui va avoir tout les elements input
-  const divLabels = document.createElement("div");
-  divLabels.className = "divLabels";
+  // création des elements du formulaire d'ajout photo
+  gestionFormAjoutPhoto(); // fichier modal.js
 
-  // création du champ input titre avec son label
-  labelTitre = document.createElement("label");
-  labelTitre.innerHTML = "Titre :";
-  inputTitre = document.createElement("input");
-  inputTitre.className = "inputTitre";
-
-  // création de la liste déroulante avec toutes les categories sauf tous
-  const select = document.createElement("select");
-  select.name = "cats";
-  select.id = "cats";
-  for (const val of cats) {
-    if (val.id !== 0) {
-      const option = document.createElement("option");
-      option.value = val.id;
-      option.text = val.name;
-      select.appendChild(option);
-    }
-  }
-  const label = document.createElement("label");
-  label.innerHTML = "Catégorie :";
-  label.htmlFor = "cats";
-
-  // creation de la barre dans modalAjoutPhoto
-  const barModalAjoutPhoto = document.createElement("hr");
-  barModalAjoutPhoto.className = "bar-modal2";
-
-  // creation du bouton valider dans modalAjoutPhoto
-  const boutonAjoutPhoto = document.createElement("button");
-  boutonAjoutPhoto.className = "boutonAjoutPhoto";
-  boutonAjoutPhoto.innerHTML = "Valider";
-  boutonAjoutPhoto.disabled = true;
-
-  // assemblage de tout les elements a rattacher a divLbales
-  divElementFiles.appendChild(divLabels);
-  divLabels.appendChild(labelTitre);
-  divLabels.appendChild(inputTitre);
-  divLabels.appendChild(label);
-  divLabels.appendChild(select);
-  divLabels.appendChild(barModalAjoutPhoto);
-  divLabels.appendChild(boutonAjoutPhoto);
-
-  verifFormAjoutPhoto(inputTitre);
+  // assemblage de tout les elements du formulaire
+  appendChildElementForm(); // fichier modal.js
 }
 
-function verifFormAjoutPhoto(inputTitre) {
+function imgPreview() {
+  divPreview.style = "padding-top : 0px";
+  iconeFiles.style = "display : none";
+  inputFiles.style = "display : none";
+  spanBoutonFiles.style = "display : none";
+  pFiles.style = "display : none";
+  const image = this.files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    const imgUrl = reader.result;
+    const img = document.createElement("img");
+    img.src = imgUrl;
+    divPreview.appendChild(img);
+  };
+  reader.readAsDataURL(image);
+}
+
+function verifFormAjoutPhoto(inputFiles, inputTitre, cats) {
   boutonAjoutPhoto = document.querySelector(".boutonAjoutPhoto");
-  if (inputTitre == !undefined) {
+
+  console.log(document.forms["divElementFiles"]["inputTitre"].value);
+
+  let c1 = document.forms["divElementFiles"]["inputFiles"].files[0];
+  let c2 = document.forms["divElementFiles"]["inputTitre"].value;
+  let c3 = document.forms["divElementFiles"]["cats"].value;
+  if (
+    (c1 == !null || c1 == !"",
+    c2 == !null || c2 == !"",
+    c3 == !null || c3 == !"")
+  ) {
     boutonAjoutPhoto.disabled = false;
-    boutonAjoutPhoto.style = "color : black";
+    boutonAjoutPhoto.style = "color : green";
   }
 }
 
 function envoiData() {
+  const formData = [];
+  // const formData = new formData();
+  // formData.append('image', Value)
+
   fetch(`http://localhost:5678/api/works/`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    body: formData,
   })
     .then((response) => response.json())
     .then((json) => {

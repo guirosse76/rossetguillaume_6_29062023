@@ -57,3 +57,88 @@ function eventModal() {
     a.addEventListener("click", openModal);
   });
 }
+
+function htmlModalAjoutPhoto() {
+  // creation des différents elements pour ma modal ajout photo
+  const ajoutFiles = document.querySelector(".modal-ajout-photo");
+  const divElementFiles = document.createElement("form");
+  divElementFiles.name = "divElementFiles";
+  divElementFiles.className = "divElementFiles";
+  ajoutFiles.appendChild(divElementFiles);
+  const divPreview = document.createElement("div");
+  divPreview.className = "divPreview";
+  const iconeFiles = document.createElement("i");
+  iconeFiles.className = "fa-solid fa-image";
+  divElementFiles.appendChild(divPreview);
+  divPreview.appendChild(iconeFiles);
+
+  // creation de mon input caché qui permet de charger l'image
+  const inputFiles = document.createElement("input");
+  inputFiles.className = "inputFiles";
+  inputFiles.type = "file";
+  inputFiles.accept = ".jpg, .png";
+  divElementFiles.appendChild(inputFiles);
+}
+
+function creationBoutonAjoutPhoto() {
+  // creation du bouton ajouter photo + le texte en dessous
+  spanBoutonFiles = document.createElement("span");
+  spanBoutonFiles.className = "spanBoutonFiles";
+  spanBoutonFiles.innerHTML = "+ Ajouter photo";
+  divElementFiles.appendChild(spanBoutonFiles);
+  const pFiles = document.createElement("p");
+  pFiles.className = "pFiles";
+  pFiles.innerHTML = "jpg, png : 4mo max";
+  divPreview.appendChild(inputFiles);
+  divPreview.appendChild(spanBoutonFiles);
+  divPreview.appendChild(pFiles);
+}
+
+function gestionFormAjoutPhoto() {
+  // création de la div qui va avoir tout les elements input
+  const divLabels = document.createElement("div");
+  divLabels.className = "divLabels";
+
+  // création du champ input titre avec son label
+  labelTitre = document.createElement("label");
+  labelTitre.innerHTML = "Titre :";
+  inputTitre = document.createElement("input");
+  inputTitre.className = "inputTitre";
+  inputTitre.name = "inputTitre";
+
+  // création de la liste déroulante avec toutes les categories sauf tous
+  const select = document.createElement("select");
+  select.name = "cats";
+  select.id = "cats";
+  for (const val of cats) {
+    if (val.id !== 0) {
+      const option = document.createElement("option");
+      option.value = val.id;
+      option.text = val.name;
+      select.appendChild(option);
+    }
+  }
+  const label = document.createElement("label");
+  label.innerHTML = "Catégorie :";
+  label.htmlFor = "cats";
+
+  // creation de la barre dans modalAjoutPhoto
+  const barModalAjoutPhoto = document.createElement("hr");
+  barModalAjoutPhoto.className = "bar-modal2";
+
+  // creation du bouton valider dans modalAjoutPhoto
+  const boutonAjoutPhoto = document.createElement("button");
+  boutonAjoutPhoto.className = "boutonAjoutPhoto";
+  boutonAjoutPhoto.innerHTML = "Valider";
+  boutonAjoutPhoto.disabled = true;
+}
+
+function appendChildElementForm() {
+  divElementFiles.appendChild(divLabels);
+  divLabels.appendChild(labelTitre);
+  divLabels.appendChild(inputTitre);
+  divLabels.appendChild(label);
+  divLabels.appendChild(select);
+  divLabels.appendChild(barModalAjoutPhoto);
+  divLabels.appendChild(boutonAjoutPhoto);
+}
