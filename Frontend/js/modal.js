@@ -58,7 +58,21 @@ function eventModal() {
   });
 }
 
-function htmlModalAjoutPhoto() {
+// fonction pour la modal ajout photo
+function createAddWorkModal(cats) {
+  const ajoutPhotoModal = document.querySelector(".header-modal-ajout-photo");
+  const lienFleche = document.createElement("a");
+  lienFleche.className = "lienFleche js-modal js-modal-close";
+  lienFleche.setAttribute("href", "#modalGaleriePhoto");
+  const fleche = document.createElement("i");
+  fleche.className = "fa-solid fa-arrow-left flecheRetour";
+  ajoutPhotoModal.appendChild(lienFleche);
+  lienFleche.appendChild(fleche);
+  lienFleche.addEventListener("click", (e) => {
+    closeModal(e);
+    openModal(e);
+  });
+
   // creation des différents elements pour ma modal ajout photo
   const ajoutFiles = document.querySelector(".modal-ajout-photo");
   const divElementFiles = document.createElement("form");
@@ -78,9 +92,12 @@ function htmlModalAjoutPhoto() {
   inputFiles.type = "file";
   inputFiles.accept = ".jpg, .png";
   divElementFiles.appendChild(inputFiles);
-}
 
-function creationBoutonAjoutPhoto() {
+  // gestion de mon input pour l'img preview
+  inputFiles.addEventListener("change", function () {
+    imgPreview();
+  });
+
   // creation du bouton ajouter photo + le texte en dessous
   spanBoutonFiles = document.createElement("span");
   spanBoutonFiles.className = "spanBoutonFiles";
@@ -92,9 +109,8 @@ function creationBoutonAjoutPhoto() {
   divPreview.appendChild(inputFiles);
   divPreview.appendChild(spanBoutonFiles);
   divPreview.appendChild(pFiles);
-}
 
-function gestionFormAjoutPhoto() {
+  // création des elements du formulaire d'ajout photo
   // création de la div qui va avoir tout les elements input
   const divLabels = document.createElement("div");
   divLabels.className = "divLabels";
@@ -131,9 +147,14 @@ function gestionFormAjoutPhoto() {
   boutonAjoutPhoto.className = "boutonAjoutPhoto";
   boutonAjoutPhoto.innerHTML = "Valider";
   boutonAjoutPhoto.disabled = true;
-}
 
-function appendChildElementForm() {
+  divElementFiles.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // if (boutonAjoutPhoto.disabled === false) {
+    addNewWork();
+    // }
+  });
+
   divElementFiles.appendChild(divLabels);
   divLabels.appendChild(labelTitre);
   divLabels.appendChild(inputTitre);
@@ -141,4 +162,58 @@ function appendChildElementForm() {
   divLabels.appendChild(select);
   divLabels.appendChild(barModalAjoutPhoto);
   divLabels.appendChild(boutonAjoutPhoto);
+}
+
+function imgPreview() {
+  divPreview.style = "padding-top : 0px";
+  iconeFiles.style = "display : none";
+  inputFiles.style = "display : none";
+  spanBoutonFiles.style = "display : none";
+  pFiles.style = "display : none";
+  const image = this.files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    const imgUrl = reader.result;
+    const img = document.createElement("img");
+    img.src = imgUrl;
+    divPreview.appendChild(img);
+  };
+  reader.readAsDataURL(image);
+}
+
+function verifFormAjoutPhoto(inputFiles, inputTitre, cats) {
+  boutonAjoutPhoto = document.querySelector(".boutonAjoutPhoto");
+
+  console.log(document.forms["divElementFiles"]["inputTitre"].value);
+
+  let c1 = document.forms["divElementFiles"]["inputFiles"].files[0];
+  let c2 = document.forms["divElementFiles"]["inputTitre"].value;
+  let c3 = document.forms["divElementFiles"]["cats"].value;
+  if (
+    (c1 == !null || c1 == !"",
+    c2 == !null || c2 == !"",
+    c3 == !null || c3 == !"")
+  ) {
+    boutonAjoutPhoto.disabled = false;
+    boutonAjoutPhoto.style = "color : green";
+  }
+}
+
+function addNewWork() {
+  const formData = [];
+  // const formData = new formData();
+  // formData.append('image', Value)
+
+  fetch(`http://localhost:5678/api/works/`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      const form = document.querySelector("divElementFiles");
+      console.log(form);
+    });
 }
