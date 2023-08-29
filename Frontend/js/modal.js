@@ -89,13 +89,27 @@ function createAddWorkModal(cats) {
   // creation de mon input caché qui permet de charger l'image
   const inputFiles = document.createElement("input");
   inputFiles.className = "inputFiles";
+  inputFiles.name = "inputFiles";
   inputFiles.type = "file";
   inputFiles.accept = ".jpg, .png";
   divElementFiles.appendChild(inputFiles);
 
   // gestion de mon input pour l'img preview
   inputFiles.addEventListener("change", function () {
-    imgPreview();
+    divPreview.style = "padding-top : 0px";
+    iconeFiles.style = "display : none";
+    inputFiles.style = "display : none";
+    spanBoutonFiles.style = "display : none";
+    pFiles.style = "display : none";
+    const image = this.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      const imgUrl = reader.result;
+      const img = document.createElement("img");
+      img.src = imgUrl;
+      divPreview.appendChild(img);
+    };
+    reader.readAsDataURL(image);
   });
 
   // creation du bouton ajouter photo + le texte en dessous
@@ -148,10 +162,14 @@ function createAddWorkModal(cats) {
   boutonAjoutPhoto.innerHTML = "Valider";
   boutonAjoutPhoto.disabled = true;
 
-  divElementFiles.addEventListener("submit", (e) => {
-    e.preventDefault();
+  divElementFiles.addEventListener("input", function (event) {
+    event.preventDefault();
+    verifFormAjoutPhoto(inputFiles, inputTitre, cats);
+
     // if (boutonAjoutPhoto.disabled === false) {
     addNewWork();
+    // } else {
+    //   console.log("bouton disabled");
     // }
   });
 
@@ -164,36 +182,19 @@ function createAddWorkModal(cats) {
   divLabels.appendChild(boutonAjoutPhoto);
 }
 
-function imgPreview() {
-  divPreview.style = "padding-top : 0px";
-  iconeFiles.style = "display : none";
-  inputFiles.style = "display : none";
-  spanBoutonFiles.style = "display : none";
-  pFiles.style = "display : none";
-  const image = this.files[0];
-  const reader = new FileReader();
-  reader.onload = () => {
-    const imgUrl = reader.result;
-    const img = document.createElement("img");
-    img.src = imgUrl;
-    divPreview.appendChild(img);
-  };
-  reader.readAsDataURL(image);
-}
-
 function verifFormAjoutPhoto(inputFiles, inputTitre, cats) {
   boutonAjoutPhoto = document.querySelector(".boutonAjoutPhoto");
 
-  console.log(document.forms["divElementFiles"]["inputTitre"].value);
-
-  let c1 = document.forms["divElementFiles"]["inputFiles"].files[0];
-  let c2 = document.forms["divElementFiles"]["inputTitre"].value;
-  let c3 = document.forms["divElementFiles"]["cats"].value;
+  let champInputFiles =
+    document.forms["divElementFiles"]["inputFiles"].files[0];
+  let champInputTitre = document.forms["divElementFiles"]["inputTitre"].value;
+  let champCategorie = document.forms["divElementFiles"]["cats"].value;
   if (
-    (c1 == !null || c1 == !"",
-    c2 == !null || c2 == !"",
-    c3 == !null || c3 == !"")
+    (champInputFiles == !null || champInputFiles == !"",
+    champInputTitre == !null || champInputTitre == !"",
+    champCategorie == !null || champCategorie == !"")
   ) {
+    console.log("vide");
     boutonAjoutPhoto.disabled = false;
     boutonAjoutPhoto.style = "color : green";
   }
@@ -203,6 +204,15 @@ function addNewWork() {
   const formData = [];
   // const formData = new formData();
   // formData.append('image', Value)
+  // const imgUrl = document.querySelector("img").getAttribute("src");
+  // const title = document.getElementById("inputTitre").value;
+  // const category = document.getElementById("categorie_projet");
+  // const categoryValue = category.options[category.selectedIndex].value;
+
+  console.log(formData);
+  // formData.append("image", imgUrl);
+  // formData.append("title", title);
+  // formData.append("category", categoryValue);
 
   fetch(`http://localhost:5678/api/works/`, {
     method: "POST",
@@ -214,6 +224,5 @@ function addNewWork() {
     .then((response) => response.json())
     .then((json) => {
       const form = document.querySelector("divElementFiles");
-      console.log(form);
     });
 }
