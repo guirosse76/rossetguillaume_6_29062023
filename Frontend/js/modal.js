@@ -158,19 +158,21 @@ function createAddWorkModal(cats) {
 
   // creation du bouton valider dans modalAjoutPhoto
   const boutonAjoutPhoto = document.createElement("button");
-  boutonAjoutPhoto.className = "boutonAjoutPhoto";
+  boutonAjoutPhoto.className = "boutonSubmitForm";
   boutonAjoutPhoto.innerHTML = "Valider";
   boutonAjoutPhoto.disabled = true;
 
   divElementFiles.addEventListener("input", function (event) {
     event.preventDefault();
     verifFormAjoutPhoto(inputFiles, inputTitre, cats);
+  });
 
-    // if (boutonAjoutPhoto.disabled === false) {
-    addNewWork();
-    // } else {
-    //   console.log("bouton disabled");
-    // }
+  divElementFiles.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    if (boutonAjoutPhoto.disabled === false) {
+      addNewWork();
+    }
   });
 
   divElementFiles.appendChild(divLabels);
@@ -183,46 +185,53 @@ function createAddWorkModal(cats) {
 }
 
 function verifFormAjoutPhoto(inputFiles, inputTitre, cats) {
-  boutonAjoutPhoto = document.querySelector(".boutonAjoutPhoto");
+  const boutonAjoutPhoto = document.querySelector(".boutonSubmitForm");
+  // console.log(boutonAjoutPhoto);
 
   let champInputFiles =
     document.forms["divElementFiles"]["inputFiles"].files[0];
   let champInputTitre = document.forms["divElementFiles"]["inputTitre"].value;
   let champCategorie = document.forms["divElementFiles"]["cats"].value;
+
+  console.log(champCategorie, champInputTitre, champInputFiles);
+
   if (
-    (champInputFiles == !null || champInputFiles == !"",
-    champInputTitre == !null || champInputTitre == !"",
-    champCategorie == !null || champCategorie == !"")
+    champInputTitre != null &&
+    champInputFiles != null &&
+    champCategorie != null
   ) {
-    console.log("vide");
+    console.log("bien rempli");
+    // console.log(boutonAjoutPhoto);
     boutonAjoutPhoto.disabled = false;
-    boutonAjoutPhoto.style = "color : green";
+    boutonAjoutPhoto.style = "background-color : green";
+  } else {
+    console.log("merci de remplir tous les champs");
   }
 }
 
 function addNewWork() {
-  const formData = [];
-  // const formData = new formData();
-  // formData.append('image', Value)
-  // const imgUrl = document.querySelector("img").getAttribute("src");
-  // const title = document.getElementById("inputTitre").value;
-  // const category = document.getElementById("categorie_projet");
-  // const categoryValue = category.options[category.selectedIndex].value;
+  const formData = new FormData();
 
-  console.log(formData);
-  // formData.append("image", imgUrl);
-  // formData.append("title", title);
-  // formData.append("category", categoryValue);
+  const imgUrl = document.forms["divElementFiles"]["inputFiles"].files[0];
+  const title = document.forms["divElementFiles"]["inputTitre"].value;
+  const category = document.forms["divElementFiles"]["cats"].value;
+
+  formData.append("image", imgUrl);
+  formData.append("title", title);
+  formData.append("category", category);
+
+  // console.log(JSON.parse(token));
 
   fetch(`http://localhost:5678/api/works/`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${JSON.parse(token)}`,
     },
     body: formData,
   })
     .then((response) => response.json())
     .then((json) => {
-      const form = document.querySelector("divElementFiles");
+      console.log(json);
+      //Qi'est ce que je dois faire quand l'envoi a marché ?
     });
 }

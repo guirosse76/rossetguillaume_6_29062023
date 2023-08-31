@@ -146,9 +146,10 @@ function deleteWorks(id) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  })
-    .then((response) => response.json())
-    .then((json) => {
+  }).then((response) => {
+    console.log(response);
+    if (response.ok) {
       init();
-    });
+    }
+  });
 }
