@@ -8,23 +8,28 @@ function checkConnexion(cats, works) {
     login.addEventListener("click", (e) => {
       localStorage.removeItem("tokenUSER");
     });
-    //Création des elements du mode édition
-    gestionModeEdition();
-    // création des différents éléments html modal galeriePhoto
-    createWorksModal();
+    const addPicture = document.getElementById("add-picture");
+
+    if (!addPicture) {
+      //Création des elements du mode édition
+      gestionModeEdition();
+      // création des différents éléments html modal galeriePhoto
+      createWorksModal();
+      // ajout des elements de la modal ajoutPhoto
+      createAddWorkModal(cats);
+    }
     // ajout des works dans la modal
     createWorksInModal(works);
-    // ajout des elements de la modal ajoutPhoto
-    createAddWorkModal(cats);
   }
 }
 
 function gestionModeEdition() {
   const bar = document.createElement("div");
   bar.className = "barEdit";
-
   const headerElement = document.querySelector("header");
+  // headerElement.innerHTML = "";
   const bodyElement = document.querySelector("body");
+
   bodyElement.insertBefore(bar, headerElement);
 
   const iconeBar = document.createElement("i");
@@ -40,6 +45,7 @@ function gestionModeEdition() {
   bar.appendChild(bouton);
 
   const divImage = document.createElement("div");
+
   divImage.className = "divImage";
   const iconeImage = document.createElement("i");
   iconeImage.className = "fa-regular fa-pen-to-square";

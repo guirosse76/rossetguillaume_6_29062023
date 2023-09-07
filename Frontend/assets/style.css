@@ -283,19 +283,29 @@ form .connexion {
   margin-left: 370px;
 }
 
-form button {
+.boutonSubmitForm {
   border-radius: 25px;
-  width: 179px;
   height: 36px;
-  margin-left: 100px;
-  background-color: #1d6154;
+  margin: 0px 50px;
+  background-color: #A7A7A7;
   border: 0;
   color: white;
   font-family: "Syne";
   font-weight: 700;
-  margin-bottom: 28px;
+  width: auto;
 }
 
+.seConnecter {
+  border-radius: 25px;
+    height: 36px;
+    margin: 20px 64px;
+    background-color: #A7A7A7;
+    border: 0;
+    color: white;
+    font-family: "Syne";
+    font-weight: 700;
+    width : 35%
+}
 .connexion .mdp {
   margin-left: 114px;
 }
@@ -339,6 +349,8 @@ form input {
 
 .gallery img {
   width: 100%;
+  height: 407px;
+object-fit: cover;
 }
 #contact {
   width: 50%;
@@ -612,6 +624,7 @@ object-fit: cover;
 .modal-wrapper img {
   width: 67px;
   height: 100px;
+  object-fit: cover;
 }
 
 .modal-wrapper figure {

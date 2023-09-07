@@ -28,20 +28,41 @@ const closeModal = function (e) {
   const modal = e.target.closest("section");
   // empeche le navigateur de se comporter convenablement
   e.preventDefault();
+
+  closeModalElement(modal);
+  // //ajout du display none de la div
+  // modal.style.display = "none";
+  // // passe aria-hidden a true pour le rendre invisible
+  // modal.setAttribute("aria-hidden", "true");
+  // // suppresion de l'attribut aria-modal
+  // modal.removeAttribute("aria-modal");
+  // // suppresion des eventlisterner au click
+  // modal.removeEventListener("click", closeModal);
+  // // suppresion des eventlisterner au click
+  // modal
+  //   .querySelector(".js-modal-close")
+  //   .removeEventListener("click", closeModal);
+  // // suppresion des eventlisterner au click
+  // modal
+  //   .querySelector(".js-modal-stop")
+  //   .removeEventListener("click", stopPropagation);
+};
+
+const closeModalElement = function (element) {
   //ajout du display none de la div
-  modal.style.display = "none";
+  element.style.display = "none";
   // passe aria-hidden a true pour le rendre invisible
-  modal.setAttribute("aria-hidden", "true");
+  element.setAttribute("aria-hidden", "true");
   // suppresion de l'attribut aria-modal
-  modal.removeAttribute("aria-modal");
+  element.removeAttribute("aria-modal");
   // suppresion des eventlisterner au click
-  modal.removeEventListener("click", closeModal);
+  element.removeEventListener("click", closeModal);
   // suppresion des eventlisterner au click
-  modal
+  element
     .querySelector(".js-modal-close")
     .removeEventListener("click", closeModal);
   // suppresion des eventlisterner au click
-  modal
+  element
     .querySelector(".js-modal-stop")
     .removeEventListener("click", stopPropagation);
 };
@@ -78,6 +99,8 @@ function createAddWorkModal(cats) {
   const divElementFiles = document.createElement("form");
   divElementFiles.name = "divElementFiles";
   divElementFiles.className = "divElementFiles";
+  divElementFiles.innerHTML = "";
+
   ajoutFiles.appendChild(divElementFiles);
   const divPreview = document.createElement("div");
   divPreview.className = "divPreview";
@@ -186,24 +209,16 @@ function createAddWorkModal(cats) {
 
 function verifFormAjoutPhoto(inputFiles, inputTitre, cats) {
   const boutonAjoutPhoto = document.querySelector(".boutonSubmitForm");
-  // console.log(boutonAjoutPhoto);
 
   let champInputFiles =
     document.forms["divElementFiles"]["inputFiles"].files[0];
   let champInputTitre = document.forms["divElementFiles"]["inputTitre"].value;
   let champCategorie = document.forms["divElementFiles"]["cats"].value;
 
-  console.log(champCategorie, champInputTitre, champInputFiles);
-
-  if (
-    champInputTitre != null &&
-    champInputFiles != null &&
-    champCategorie != null
-  ) {
+  if (champInputTitre && champCategorie && champInputFiles) {
     console.log("bien rempli");
-    // console.log(boutonAjoutPhoto);
     boutonAjoutPhoto.disabled = false;
-    boutonAjoutPhoto.style = "background-color : green";
+    boutonAjoutPhoto.style = "background-color : #1D6154";
   } else {
     console.log("merci de remplir tous les champs");
   }
@@ -232,6 +247,15 @@ function addNewWork() {
     .then((response) => response.json())
     .then((json) => {
       console.log(json);
+      init();
+      closeModalElement(document.getElementById("modalAjoutPhoto"));
+      //Fucntion rest forme
       //Qi'est ce que je dois faire quand l'envoi a marché ?
     });
+}
+
+function resetFrom(params) {
+  //Recupere le formulaire
+  //Reset
+  //Reachifer le bontoon pour ajouter l'image (avant la priewiens)
 }

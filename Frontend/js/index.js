@@ -109,16 +109,15 @@ function createCategories(cats, works) {
 // création des différents éléments html modal galeriePhoto
 function createWorksModal() {
   const worksModal = document.querySelector(".modal-wrapper");
-
+  // worksModal.innerHTML = "";
   const div = document.createElement("div");
   div.className = "worksModal";
   div.id = "worksModalContainer";
   worksModal.appendChild(div);
-
   const divFooterModal = document.createElement("div");
+
   divFooterModal.className = "divFooterModal";
   worksModal.appendChild(divFooterModal);
-
   const bar = document.createElement("hr");
   bar.className = "bar-modal1";
 
@@ -128,6 +127,7 @@ function createWorksModal() {
   const boutonAjoutPhoto = document.createElement("a");
   boutonAjoutPhoto.className = "boutonAjoutPhoto ";
   boutonAjoutPhoto.innerHTML = "Ajouter une photo";
+  boutonAjoutPhoto.id = "add-picture";
   boutonAjoutPhoto.setAttribute("href", "#modalAjoutPhoto");
   divFooterModal.appendChild(boutonAjoutPhoto);
   boutonAjoutPhoto.addEventListener("click", (e) => {
@@ -139,7 +139,7 @@ function createWorksModal() {
   divFooterModal.appendChild(suppGallery);
 }
 
-function deleteWorks(id) {
+function deleteWorks(id, works) {
   let token = JSON.parse(localStorage.getItem("tokenUSER"));
   fetch(`http://localhost:5678/api/works/${id}`, {
     method: "DELETE",
@@ -147,9 +147,18 @@ function deleteWorks(id) {
       Authorization: `Bearer ${token}`,
     },
   }).then((response) => {
-    console.log(response);
     if (response.ok) {
       init();
+
+      // //Créer les works dans le HTML
+      // createWorks(works);
+      // //Ajout du bouton Tous en premier
+      // const allCat = { id: 0, name: "Tous" };
+      // cats.unshift(allCat);
+      // // création des catégorie et des projets
+      // createCategories(cats, works);
+      // // vérification si la personne est connecté
+      // checkConnexion(cats, works);
     }
   });
 }
