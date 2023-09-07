@@ -104,8 +104,10 @@ function createAddWorkModal(cats) {
   ajoutFiles.appendChild(divElementFiles);
   const divPreview = document.createElement("div");
   divPreview.className = "divPreview";
+  divPreview.id = "divPreview";
   const iconeFiles = document.createElement("i");
   iconeFiles.className = "fa-solid fa-image";
+  iconeFiles.id = "iconeFiles";
   divElementFiles.appendChild(divPreview);
   divPreview.appendChild(iconeFiles);
 
@@ -113,6 +115,7 @@ function createAddWorkModal(cats) {
   const inputFiles = document.createElement("input");
   inputFiles.className = "inputFiles";
   inputFiles.name = "inputFiles";
+  inputFiles.id = "inputFiles";
   inputFiles.type = "file";
   inputFiles.accept = ".jpg, .png";
   divElementFiles.appendChild(inputFiles);
@@ -129,6 +132,7 @@ function createAddWorkModal(cats) {
     reader.onload = () => {
       const imgUrl = reader.result;
       const img = document.createElement("img");
+      img.id = "imgPreview";
       img.src = imgUrl;
       divPreview.appendChild(img);
     };
@@ -138,10 +142,12 @@ function createAddWorkModal(cats) {
   // creation du bouton ajouter photo + le texte en dessous
   spanBoutonFiles = document.createElement("span");
   spanBoutonFiles.className = "spanBoutonFiles";
+  spanBoutonFiles.id = "spanBoutonFiles";
   spanBoutonFiles.innerHTML = "+ Ajouter photo";
   divElementFiles.appendChild(spanBoutonFiles);
   const pFiles = document.createElement("p");
   pFiles.className = "pFiles";
+  pFiles.id = "pFiles";
   pFiles.innerHTML = "jpg, png : 4mo max";
   divPreview.appendChild(inputFiles);
   divPreview.appendChild(spanBoutonFiles);
@@ -249,12 +255,33 @@ function addNewWork() {
       console.log(json);
       init();
       closeModalElement(document.getElementById("modalAjoutPhoto"));
-      //Fucntion rest forme
+      resetFrom();
       //Qi'est ce que je dois faire quand l'envoi a marché ?
     });
 }
 
-function resetFrom(params) {
+function resetFrom() {
+  const img = document.getElementById("imgPreview");
+  img.remove();
+
+  const form = document.querySelector(".divElementFiles");
+  form.reset();
+  const iconeFiles = document.getElementById("iconeFiles");
+  iconeFiles.style = "display = block;";
+
+  const inputFiles = document.getElementById("inputFiles");
+  inputFiles.style = "display : flex; ";
+
+  const spanBoutonFiles = document.getElementById("spanBoutonFiles");
+  spanBoutonFiles.style = "display : flex;";
+
+  const pFiles = document.getElementById("pFiles");
+  pFiles.style = "display : block";
+
+  const divPreview = document.getElementById("divPreview");
+  divPreview.style = "padding-top : 10px;";
+
+  console.log(iconeFiles);
   //Recupere le formulaire
   //Reset
   //Reachifer le bontoon pour ajouter l'image (avant la priewiens)
