@@ -30,22 +30,6 @@ const closeModal = function (e) {
   e.preventDefault();
 
   closeModalElement(modal);
-  // //ajout du display none de la div
-  // modal.style.display = "none";
-  // // passe aria-hidden a true pour le rendre invisible
-  // modal.setAttribute("aria-hidden", "true");
-  // // suppresion de l'attribut aria-modal
-  // modal.removeAttribute("aria-modal");
-  // // suppresion des eventlisterner au click
-  // modal.removeEventListener("click", closeModal);
-  // // suppresion des eventlisterner au click
-  // modal
-  //   .querySelector(".js-modal-close")
-  //   .removeEventListener("click", closeModal);
-  // // suppresion des eventlisterner au click
-  // modal
-  //   .querySelector(".js-modal-stop")
-  //   .removeEventListener("click", stopPropagation);
 };
 
 const closeModalElement = function (element) {
@@ -222,11 +206,8 @@ function verifFormAjoutPhoto(inputFiles, inputTitre, cats) {
   let champCategorie = document.forms["divElementFiles"]["cats"].value;
 
   if (champInputTitre && champCategorie && champInputFiles) {
-    console.log("bien rempli");
     boutonAjoutPhoto.disabled = false;
     boutonAjoutPhoto.style = "background-color : #1D6154";
-  } else {
-    console.log("merci de remplir tous les champs");
   }
 }
 
@@ -241,8 +222,6 @@ function addNewWork() {
   formData.append("title", title);
   formData.append("category", category);
 
-  // console.log(JSON.parse(token));
-
   fetch(`http://localhost:5678/api/works/`, {
     method: "POST",
     headers: {
@@ -252,11 +231,9 @@ function addNewWork() {
   })
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
       init();
       closeModalElement(document.getElementById("modalAjoutPhoto"));
       resetFrom();
-      //Qi'est ce que je dois faire quand l'envoi a marché ?
     });
 }
 
@@ -280,9 +257,4 @@ function resetFrom() {
 
   const divPreview = document.getElementById("divPreview");
   divPreview.style = "padding-top : 10px;";
-
-  console.log(iconeFiles);
-  //Recupere le formulaire
-  //Reset
-  //Reachifer le bontoon pour ajouter l'image (avant la priewiens)
 }

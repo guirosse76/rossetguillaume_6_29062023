@@ -1,7 +1,6 @@
 function checkConnexion(cats, works) {
   // récupération du token stocké dans le localStorage avec le nom tokenUSER
   token = localStorage.getItem("tokenUSER");
-  // récupération de
   const login = document.getElementById("login");
   if (token) {
     login.innerHTML = "logout";

@@ -149,16 +149,6 @@ function deleteWorks(id, works) {
   }).then((response) => {
     if (response.ok) {
       init();
-
-      // //Créer les works dans le HTML
-      // createWorks(works);
-      // //Ajout du bouton Tous en premier
-      // const allCat = { id: 0, name: "Tous" };
-      // cats.unshift(allCat);
-      // // création des catégorie et des projets
-      // createCategories(cats, works);
-      // // vérification si la personne est connecté
-      // checkConnexion(cats, works);
     }
   });
 }
