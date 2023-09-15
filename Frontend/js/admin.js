@@ -26,7 +26,6 @@ function gestionModeEdition() {
   const bar = document.createElement("div");
   bar.className = "barEdit";
   const headerElement = document.querySelector("header");
-  // headerElement.innerHTML = "";
   const bodyElement = document.querySelector("body");
 
   bodyElement.insertBefore(bar, headerElement);
