@@ -533,6 +533,7 @@ a .flecheRetour {
   align-items: center;
   width: 80%;
   padding-top: 12px;
+  height: 169px;
 }
 
 .divLabels {
@@ -614,7 +615,8 @@ a .flecheRetour {
 
 .divElementFiles .divPreview img {
   width: 100%;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
 }
 
 .modal-wrapper img {
